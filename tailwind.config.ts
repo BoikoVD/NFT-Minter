@@ -8,10 +8,28 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontFamily: {
+        'spaceGrotesk': ['var(--font-spaceGrotesk)'],
+        'poppins': ['var(--font-poppins)'],
+      },
+      colors: {
+        'white': '#FFFFFF',
+        'black': '#000000',
+        'purple': '#400061',
+        'tyrian-purple': '#620049',
+        'pink': '#FF00BF',
+        'blue': '#5500FF'
+      },
+      backgroundImage: ({ theme }) => ({
+        "layout-gradient": `linear-gradient(${theme('colors.purple')}, ${theme('colors.tyrian-purple')})`,
+        "button-gradient": `linear-gradient(0.25turn, ${theme('colors.pink')}, ${theme('colors.blue')}, ${theme('colors.pink')})`,
+      }),
+      backgroundSize: {
+        'size-200': '200% 200%',
+      },
+      backgroundPosition: {
+        'pos-0': '0% 0%',
+        'pos-100': '100% 100%',
       },
     },
   },
