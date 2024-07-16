@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Poppins } from 'next/font/google'
+import { Web3Provider } from "@/context/Web3Context";
 import "./globals.css";
  
 const spaceGrotesk = Space_Grotesk({ 
@@ -21,7 +22,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${spaceGrotesk.variable} bg-layout-gradient`}>
-        {children}
+        <Web3Provider>
+          {children}
+        </Web3Provider>
       </body>
     </html>
   );

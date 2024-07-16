@@ -24,7 +24,7 @@ export default function Home() {
             </Button>
           </div>
           <div className="flex-[1_1_50%]">
-            <Image src={PassNFTImage} alt='The Pass NFT'/>
+            <Image src={PassNFTImage} alt='The Pass NFT' priority/>
           </div>
         </section>
       </PageContainer>

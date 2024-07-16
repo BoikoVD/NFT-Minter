@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Button from "../UI/Button";
+import WalletButton from "../WalletButton/WalletButton";
 
 interface IHeader {
     children: React.ReactNode,
@@ -25,9 +25,7 @@ export default function Header() {
                 <Link href={'/mint'}>Mint</Link>
             </nav>
             <div className="">
-                <Button>
-                    Connect Wallet
-                </Button>
+                <WalletButton/>
             </div>
         </header>
     );
