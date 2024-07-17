@@ -4,7 +4,7 @@ import PageContainer from "@/components/UI/PageContainer";
 import Text from "@/components/UI/Text";
 import Title from "@/components/UI/Title";
 import Image from "next/image";
-import PassNFTImage from '../assets/images/PassNFT.webp';
+import MainImage from '../assets/images/main.webp';
 
 export default function Home() {
   return (
@@ -24,7 +24,7 @@ export default function Home() {
             </Button>
           </div>
           <div className="flex-[1_1_50%]">
-            <Image src={PassNFTImage} alt='The Pass NFT' priority/>
+            <Image src={MainImage} alt='The Pass NFT' priority/>
           </div>
         </section>
       </PageContainer>

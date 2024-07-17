@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 
 interface IWeb3Context {
   account: string | null;
+  networkId: string | null;
   connectWallet: () => Promise<void>;
 }
 
@@ -18,15 +19,14 @@ export const useWeb3Context = (): IWeb3Context => {
 
 export const Web3Provider = ({ children }: { children: ReactNode }) => {
     const [account, setAccount] = useState<string | null>(null);
+    const [networkId, setNetworkId] = useState<string | null>(null);
 
-    const connectWallet = async (isInitial = false, metamask = window?.ethereum) => {
+    const connectWallet = async (metamask = window?.ethereum) => {
         try {
             if (!metamask) {
                 return alert('Please install metamask ');
             } else {
-                const accounts = isInitial 
-                    ? await metamask.request({ method: 'eth_accounts' }) as string[]
-                    : await metamask.request({ method: 'eth_requestAccounts' }) as string[];
+                const accounts = await metamask.request({ method: 'eth_requestAccounts' }) as string[];
                 console.log('Account ', accounts);
                 if (accounts.length) {
                     setAccount(accounts[0]);
@@ -40,12 +40,22 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         if (window?.ethereum) {
-            connectWallet(true);
+            connectWallet();
+
+            window.ethereum.on('networkChanged', (e) => {
+              console.log('networkChanged ', e);
+              setNetworkId(e);
+              //window.location.reload();
+            })
+            window.ethereum.on('accountsChanged', (e) => {
+              console.log('accountsChanged ', e);
+              //window.location.reload();
+            })
         }
     }, []);
 
   return (
-    <Web3Context.Provider value={{ account, connectWallet }}>
+    <Web3Context.Provider value={{ account, networkId, connectWallet }}>
       {children}
     </Web3Context.Provider>
   );
