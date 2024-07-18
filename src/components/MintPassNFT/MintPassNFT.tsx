@@ -4,7 +4,7 @@ import Button from "../UI/Button";
 import Text from "../UI/Text";
 
 export default function MintPassNFT() {
-    const { account, contract } = useWeb3Context();
+    const { account, contract, ownPassNFT } = useWeb3Context();
 
     const handleMint = async () => {
         if (account && contract) {
@@ -21,11 +21,17 @@ export default function MintPassNFT() {
         }
     }
 
-    return account
-        ? <Button onClick={handleMint}>
-            Mint
-        </Button>
-        : <Text>
-            You must connect a wallet to mint!
-        </Text>;
+    return (
+        ownPassNFT
+            ? <Text>
+                You have minted the Pass NFT!
+            </Text>
+            : account
+                ? <Button onClick={handleMint}>
+                    Mint
+                </Button>
+                : <Text>
+                    You must connect a wallet to mint!
+                </Text>
+    );
 };

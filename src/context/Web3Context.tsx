@@ -9,6 +9,7 @@ interface IWeb3Context {
   account: string | null;
   networkId: string | null;
   contract: Contract<AbiItem[]> | null,
+  ownPassNFT: boolean,
   connectWallet: () => Promise<void>;
 }
 
@@ -28,6 +29,7 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
   const [networkId, setNetworkId] = useState<string | null>(null);
   const [contract, setContract] = useState<Contract<AbiItem[]> | null>(null);
   const [isConnecting, setIsConnecting] = useState<boolean>(false);
+  const [ownPassNFT, setOwnPassNFT] = useState<boolean>(false);
 
   const connectWallet = async () => {
     if (isMetaMaskInstalled && !isConnecting) {
@@ -46,6 +48,8 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
 
         const contract = new web3.eth.Contract(passNFT.abi, PassNFTAddress);
         setContract(contract);
+
+        checkOwningOfPassNFT(accounts[0], contract);
       } catch (error) {
         console.log('[Web3Context]: ConnectWallet ERROR: ', error);
       } finally {
@@ -53,6 +57,20 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
       }
     }
   };
+
+  const checkOwningOfPassNFT = async(accountAddress: string, contractInstance: Contract<AbiItem[]>) => {
+    try {
+      const amount = await contractInstance.methods.balanceOf(accountAddress).call();
+      if (Number(amount) && Number(amount) >= 1) {
+        setOwnPassNFT(true)
+      } else {
+        setOwnPassNFT(false)
+      }
+      console.log('[Web3Context]: Check owning of pass NFT response: ', amount)
+    } catch (error) {
+      console.log('[Web3Context]: Check owning of pass NFT ERROR: ', error);
+    }
+  }
 
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
@@ -71,6 +89,9 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
       const handleAccountsChanged = (accounts: string[]) => {
         console.log('[Web3Context]: Account changed: ', accounts);
         setAccount(accounts[0]);
+        if (accounts[0] && contract) {
+          checkOwningOfPassNFT(accounts[0], contract);
+        }
       };
       const handleNetworkChanged = (networkId: string) => {
         console.log('[Web3Context]: Network changed: ', networkId);
@@ -85,10 +106,10 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
         window.ethereum.removeListener('networkChanged', handleNetworkChanged);
       }
     }
-  }, [account]);
+  }, [account, contract]);
 
   return (
-    <Web3Context.Provider value={{ account, networkId, contract, connectWallet }}>
+    <Web3Context.Provider value={{ account, networkId, contract, ownPassNFT, connectWallet }}>
       {children}
     </Web3Context.Provider>
   );
