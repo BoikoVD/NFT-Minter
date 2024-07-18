@@ -1,26 +1,20 @@
 "use client"
-import { ethers } from "ethers";
 import { useWeb3Context } from "@/context/Web3Context";
 import Button from "../UI/Button";
 import Text from "../UI/Text";
-import passNFT from "./PassNFT.json";
-
-const PassNFTAddress = '0x516427DcB763358617D182331a1499b01C4b0228';
 
 export default function MintPassNFT() {
-    const { account } = useWeb3Context();
+    const { account, contract } = useWeb3Context();
 
     const handleMint = async () => {
-        if (window.ethereum) {
-            const provider = new ethers.BrowserProvider(window.ethereum);
-            const signer = await provider.getSigner();
-            const contract = new ethers.Contract(PassNFTAddress, passNFT.abi, signer);
-
+        if (account && contract) {
             try {
-                const res = await contract.mint(BigInt(1), {
-                    value: ethers.parseEther('0.01')
+                const mintPrice = Number(await contract.methods.mintPrice().call());
+                const res = await contract.methods.mint(1).send({
+                    from: account,
+                    value: String(mintPrice)
                 });
-                console.log('Mint Pass NFT: ', res)
+                console.log('Mint Pass NFT response: ', res)
             } catch (e) {
                 console.log('Mint Pass NFT ERROR: ', e)
             }

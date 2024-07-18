@@ -1,9 +1,14 @@
 "use client"
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { AbiItem, Contract, Web3 } from 'web3';
+import passNFT from "./PassNFT.json";
+
+const PassNFTAddress = '0x516427DcB763358617D182331a1499b01C4b0228';
 
 interface IWeb3Context {
   account: string | null;
   networkId: string | null;
+  contract: Contract<AbiItem[]> | null,
   connectWallet: () => Promise<void>;
 }
 
@@ -18,44 +23,72 @@ export const useWeb3Context = (): IWeb3Context => {
 };
 
 export const Web3Provider = ({ children }: { children: ReactNode }) => {
-    const [account, setAccount] = useState<string | null>(null);
-    const [networkId, setNetworkId] = useState<string | null>(null);
+  const [isMetaMaskInstalled, setIsMetaMaskInstalled] = useState<boolean>(false);
+  const [account, setAccount] = useState<string | null>(null);
+  const [networkId, setNetworkId] = useState<string | null>(null);
+  const [contract, setContract] = useState<Contract<AbiItem[]> | null>(null);
+  const [isConnecting, setIsConnecting] = useState<boolean>(false);
 
-    const connectWallet = async (metamask = window?.ethereum) => {
-        try {
-            if (!metamask) {
-                return alert('Please install metamask ');
-            } else {
-                const accounts = await metamask.request({ method: 'eth_requestAccounts' }) as string[];
-                console.log('Account ', accounts);
-                if (accounts.length) {
-                    setAccount(accounts[0]);
-                }
-            }
-        } catch (error) {
-            console.error(error);
-            throw new Error('No ethereum object.');
-        }
-    };
+  const connectWallet = async () => {
+    if (isMetaMaskInstalled && !isConnecting) {
+      setIsConnecting(true);
+      
+      try {
+        const web3 = new Web3(window.ethereum);
+        await window.ethereum.send('eth_requestAccounts');
+        const accounts = await web3.eth.getAccounts();
+        setAccount(accounts[0]);
+        console.log('[Web3Context]: Account connected: ', accounts[0]);
 
-    useEffect(() => {
-        if (window?.ethereum) {
-            connectWallet();
+        const netId = await web3.eth.getChainId();
+        setNetworkId(Number(netId).toString());
+        console.log('[Web3Context]: Network Id: ', Number(netId).toString());
 
-            window.ethereum.on('networkChanged', (e) => {
-              console.log('networkChanged ', e);
-              setNetworkId(e);
-              //window.location.reload();
-            })
-            window.ethereum.on('accountsChanged', (e) => {
-              console.log('accountsChanged ', e);
-              //window.location.reload();
-            })
-        }
-    }, []);
+        const contract = new web3.eth.Contract(passNFT.abi, PassNFTAddress);
+        setContract(contract);
+      } catch (error) {
+        console.log('[Web3Context]: ConnectWallet ERROR: ', error);
+      } finally {
+        setIsConnecting(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
+        setIsMetaMaskInstalled(true);
+    } else {
+      return alert('Please install metamask ');
+    }
+  }, []);
+
+  useEffect(() => {
+    connectWallet();
+  }, [isMetaMaskInstalled]);
+
+  useEffect(() => {
+    if (account) {
+      const handleAccountsChanged = (accounts: string[]) => {
+        console.log('[Web3Context]: Account changed: ', accounts);
+        setAccount(accounts[0]);
+      };
+      const handleNetworkChanged = (networkId: string) => {
+        console.log('[Web3Context]: Network changed: ', networkId);
+        setNetworkId(networkId);
+      };
+
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+      window.ethereum.on('networkChanged', handleNetworkChanged);
+
+      return () => {
+        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+        window.ethereum.removeListener('networkChanged', handleNetworkChanged);
+      }
+    }
+  }, [account]);
 
   return (
-    <Web3Context.Provider value={{ account, networkId, connectWallet }}>
+    <Web3Context.Provider value={{ account, networkId, contract, connectWallet }}>
       {children}
     </Web3Context.Provider>
   );
