@@ -4,11 +4,11 @@ import Text from "../UI/Text";
 import Button from "../UI/Button";
 
 export default function WalletButton() {
-    const { account, networkId, connectWallet } = useWeb3Context();
+    const { account, isCorrectNetwork, connectWallet } = useWeb3Context();
 
     return account
         ? <div className="flex items-center">
-            {networkId != '11155111' ? <Text className="mr-6">Wrong network!</Text> : null}
+            {!isCorrectNetwork ? <Text className="mr-6">Wrong network!</Text> : null}
             <Button size='small' hoverText='Disconnect' className='w-[240px]'>
                 {`${account.substring(0,4)}...${account.slice(-5)}`}
             </Button>

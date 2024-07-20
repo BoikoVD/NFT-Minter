@@ -8,6 +8,7 @@ const PassNFTAddress = '0x516427DcB763358617D182331a1499b01C4b0228';
 interface IWeb3Context {
   account: string | null;
   networkId: string | null;
+  isCorrectNetwork: boolean;
   contract: Contract<AbiItem[]> | null,
   ownPassNFT: boolean,
   connectWallet: () => Promise<void>;
@@ -27,6 +28,7 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
   const [isMetaMaskInstalled, setIsMetaMaskInstalled] = useState<boolean>(false);
   const [account, setAccount] = useState<string | null>(null);
   const [networkId, setNetworkId] = useState<string | null>(null);
+  const [isCorrectNetwork, setIsCorrectNetwork] = useState<boolean>(false);
   const [contract, setContract] = useState<Contract<AbiItem[]> | null>(null);
   const [isConnecting, setIsConnecting] = useState<boolean>(false);
   const [ownPassNFT, setOwnPassNFT] = useState<boolean>(false);
@@ -48,8 +50,6 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
 
         const contract = new web3.eth.Contract(passNFT.abi, PassNFTAddress);
         setContract(contract);
-
-        checkOwningOfPassNFT(accounts[0], contract);
       } catch (error) {
         console.log('[Web3Context]: ConnectWallet ERROR: ', error);
       } finally {
@@ -89,9 +89,6 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
       const handleAccountsChanged = (accounts: string[]) => {
         console.log('[Web3Context]: Account changed: ', accounts);
         setAccount(accounts[0]);
-        if (accounts[0] && contract) {
-          checkOwningOfPassNFT(accounts[0], contract);
-        }
       };
       const handleNetworkChanged = (networkId: string) => {
         console.log('[Web3Context]: Network changed: ', networkId);
@@ -106,10 +103,24 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
         window.ethereum.removeListener('networkChanged', handleNetworkChanged);
       }
     }
-  }, [account, contract]);
+  }, [account]);
+
+  useEffect(() => {
+    if (networkId && networkId === '11155111') {
+      setIsCorrectNetwork(true);
+    } else {
+      setIsCorrectNetwork(false);
+    }
+  }, [networkId]);
+
+  useEffect(() => {
+    if (account && contract && isCorrectNetwork) {
+      checkOwningOfPassNFT(account, contract);
+    }
+  }, [account, contract, isCorrectNetwork])
 
   return (
-    <Web3Context.Provider value={{ account, networkId, contract, ownPassNFT, connectWallet }}>
+    <Web3Context.Provider value={{ account, networkId, isCorrectNetwork, contract, ownPassNFT, connectWallet }}>
       {children}
     </Web3Context.Provider>
   );

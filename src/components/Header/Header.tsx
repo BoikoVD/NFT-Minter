@@ -17,6 +17,7 @@ export default function Header() {
             <nav className="mx-3 flex gap-10 text-white">
                 <Link href={'/'}>Home</Link>
                 <Link href={'/mint'}>Mint</Link>
+                <Link href={'/create'}>Create</Link>
             </nav>
             <div className="">
                 <WalletButton/>
