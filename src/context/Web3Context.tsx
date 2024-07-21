@@ -3,8 +3,6 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { AbiItem, Contract, Web3 } from 'web3';
 import passNFT from "./PassNFT.json";
 
-const PassNFTAddress = '0x516427DcB763358617D182331a1499b01C4b0228';
-
 interface IWeb3Context {
   account: string | null;
   networkId: string | null;
@@ -48,7 +46,7 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
         setNetworkId(Number(netId).toString());
         console.log('[Web3Context]: Network Id: ', Number(netId).toString());
 
-        const contract = new web3.eth.Contract(passNFT.abi, PassNFTAddress);
+        const contract = new web3.eth.Contract(passNFT.abi, process.env.NEXT_PUBLIC_PASS_NFT_CONTRACT_ADDRESS);
         setContract(contract);
       } catch (error) {
         console.log('[Web3Context]: ConnectWallet ERROR: ', error);
