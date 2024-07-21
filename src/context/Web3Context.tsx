@@ -2,13 +2,15 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { AbiItem, Contract, Web3 } from 'web3';
 import passNFT from "./PassNFT.json";
+import minterNFT from "./MinterNFT.json";
 
 interface IWeb3Context {
   account: string | null;
   networkId: string | null;
   isCorrectNetwork: boolean;
-  contract: Contract<AbiItem[]> | null,
-  ownPassNFT: boolean,
+  passNFTContract: Contract<AbiItem[]> | null,
+  minterNFTContract: Contract<AbiItem[]> | null,
+  isOwnerOfPassNFT: boolean,
   connectWallet: () => Promise<void>;
 }
 
@@ -27,9 +29,12 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
   const [account, setAccount] = useState<string | null>(null);
   const [networkId, setNetworkId] = useState<string | null>(null);
   const [isCorrectNetwork, setIsCorrectNetwork] = useState<boolean>(false);
-  const [contract, setContract] = useState<Contract<AbiItem[]> | null>(null);
+
+  const [passNFTContract, setPassNFTContract] = useState<Contract<AbiItem[]> | null>(null);
+  const [minterNFTContract, setMinterNFTContract] = useState<Contract<AbiItem[]> | null>(null);
+  const [isOwnerOfPassNFT, setIsOwnerOfPassNFT] = useState<boolean>(false);
+
   const [isConnecting, setIsConnecting] = useState<boolean>(false);
-  const [ownPassNFT, setOwnPassNFT] = useState<boolean>(false);
 
   const connectWallet = async () => {
     if (isMetaMaskInstalled && !isConnecting) {
@@ -46,8 +51,11 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
         setNetworkId(Number(netId).toString());
         console.log('[Web3Context]: Network Id: ', Number(netId).toString());
 
-        const contract = new web3.eth.Contract(passNFT.abi, process.env.NEXT_PUBLIC_PASS_NFT_CONTRACT_ADDRESS);
-        setContract(contract);
+        const passNFTContract = new web3.eth.Contract(passNFT.abi, process.env.NEXT_PUBLIC_PASS_NFT_CONTRACT_ADDRESS);
+        setPassNFTContract(passNFTContract);
+
+        const minterNFTContract = new web3.eth.Contract(minterNFT.abi, process.env.NEXT_PUBLIC_MINTER_NFT_CONTRACT_ADDRESS);
+        setMinterNFTContract(minterNFTContract);
       } catch (error) {
         console.log('[Web3Context]: ConnectWallet ERROR: ', error);
       } finally {
@@ -60,9 +68,9 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
     try {
       const amount = await contractInstance.methods.balanceOf(accountAddress).call();
       if (Number(amount) && Number(amount) >= 1) {
-        setOwnPassNFT(true)
+        setIsOwnerOfPassNFT(true)
       } else {
-        setOwnPassNFT(false)
+        setIsOwnerOfPassNFT(false)
       }
       console.log('[Web3Context]: Check owning of pass NFT response: ', amount)
     } catch (error) {
@@ -72,7 +80,7 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
-        setIsMetaMaskInstalled(true);
+      setIsMetaMaskInstalled(true);
     } else {
       return alert('Please install metamask ');
     }
@@ -112,13 +120,23 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
   }, [networkId]);
 
   useEffect(() => {
-    if (account && contract && isCorrectNetwork) {
-      checkOwningOfPassNFT(account, contract);
+    if (account && passNFTContract && networkId) {
+      checkOwningOfPassNFT(account, passNFTContract);
     }
-  }, [account, contract, isCorrectNetwork])
+  }, [account, passNFTContract, networkId])
 
   return (
-    <Web3Context.Provider value={{ account, networkId, isCorrectNetwork, contract, ownPassNFT, connectWallet }}>
+    <Web3Context.Provider 
+      value={{ 
+        account, 
+        networkId, 
+        isCorrectNetwork, 
+        passNFTContract, 
+        minterNFTContract,
+        isOwnerOfPassNFT, 
+        connectWallet 
+      }}
+    >
       {children}
     </Web3Context.Provider>
   );

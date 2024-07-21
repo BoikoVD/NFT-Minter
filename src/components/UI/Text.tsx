@@ -1,5 +1,3 @@
-import cn from "classnames";
-
 interface IText {
     children: React.ReactNode,
     className?: string,
@@ -7,5 +5,5 @@ interface IText {
 
 export default function Text({ children, className = '' }: IText) {
     
-    return <p className={cn('text-lg text-white', className)}>{children}</p>;
+    return <p className={`text-lg text-white ${className}`}>{children}</p>;
 };

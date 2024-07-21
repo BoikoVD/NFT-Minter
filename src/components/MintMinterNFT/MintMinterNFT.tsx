@@ -3,7 +3,7 @@ import { useWeb3Context } from "@/context/Web3Context";
 import Button from "../UI/Button";
 import Text from "../UI/Text";
 
-export default function MintPassNFT() {
+export default function MintMinterNFT() {
     const { account, passNFTContract, isOwnerOfPassNFT } = useWeb3Context();
 
     const handleMint = async () => {

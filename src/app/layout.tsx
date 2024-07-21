@@ -13,6 +13,7 @@ const poppins = Poppins({
     weight: ['400', '700'],
     variable: '--font-poppins',
 });
+
 export const metadata: Metadata = {
   title: "NFT Minter",
   description: "Create your own NFT with Minter",
