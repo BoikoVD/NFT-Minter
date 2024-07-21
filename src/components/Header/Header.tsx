@@ -1,26 +1,58 @@
+"use client"
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import WalletButton from "../WalletButton/WalletButton";
 import LogoImage from '../../assets/images/logo.webp';
 
-interface IHeader {
-    children: React.ReactNode,
-};
-
 export default function Header() {
-    
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
     return (
-        <header className="w-full flex justify-between items-center my-9 px-8 absolute top-0 left-0">
-            <div className="relative flex flex-col items-center">
-                <Image src={LogoImage} alt='logo image' objectFit="cover" height={90}/>
-            </div>
-            <nav className="mx-3 flex gap-10 text-white">
-                <Link href={'/'}>Home</Link>
-                <Link href={'/mint'}>Mint</Link>
-                <Link href={'/create'}>Create</Link>
-            </nav>
-            <div className="">
-                <WalletButton/>
+        <header className="px-5 w-full py-4 fixed top-0 left-0 z-10 bg-purple md:py-9 md:bg-transparent">
+            <div className="max-w-[1425px] mx-auto flex justify-between items-center">
+                <div className="relative flex flex-col items-center z-[100] w-[120px] md:w-[150px]">
+                    <Image src={LogoImage} alt='logo image' objectFit="cover" fill={false} />
+                </div>
+                <nav
+                    className={
+                        `fixed top-0 w-screen h-screen max-h-screen bg-purple z-[99] flex flex-col items-center transition-all duration-300 py-10 
+                        md:static md:w-auto md:h-auto md:mx-3 md:py-0 md:bg-transparent
+                        ${isMenuOpen ? 'left-0' : 'left-[100%]'}`
+                    }
+                >
+                    <ul className="w-full flex-[1_1_auto] flex flex-col items-center justify-center gap-10 my-10 overflow-auto text-white md:flex-row md:my-0">
+                        <li>
+                            <Link href={'/'}>Home</Link>
+                        </li>
+                        <li>
+                            <Link href={'/mint'}>Mint</Link>
+                        </li>
+                        <li>
+                            <Link href={'/create'}>Create</Link>
+                        </li>
+                    </ul>
+                    <div className="flex md:hidden">
+                        <WalletButton />
+                    </div>
+                </nav>
+                <div className="hidden md:flex">
+                    <WalletButton />
+                </div>
+                <button className="flex md:hidden relative w-[34px] h-[24px] z-[100]" onClick={() => setIsMenuOpen((prev) => !prev)}>
+                    <span className={
+                        `absolute left-0 w-full h-[2px] bg-white transition-all duration-300
+                        ${isMenuOpen ? 'rotate-[45deg] top-[11px]' : 'top-0'}`
+                    } />
+                    <span className={
+                        `absolute top-[50%] left-0 w-full h-[2px] bg-white transition-all duration-300 translate-y-[-50%]
+                        ${isMenuOpen ? 'opacity-0' : 'opacity-1'}`
+                    } />
+                    <span className={
+                        `absolute left-0 w-full h-[2px] bg-white transition-all duration-300 group-hover: group-hover:
+                        ${isMenuOpen ? 'rotate-[-45deg] bottom-[11px]' : 'bottom-0'}`
+                    } />
+                </button>
             </div>
         </header>
     );

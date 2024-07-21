@@ -11,19 +11,19 @@ export default function Home() {
     <main className="font-poppins">
       <PageContainer>
         <Header />
-        <section className="w-full h-screen flex-auto flex items-center pt-[80px]">
-          <div className="flex-[1_1_50%] pr-10">
+        <section className="w-full min-h-screen flex-auto flex flex-col items-center mt-[150px] md:flex-row md:mt-0">
+          <div className="text-center md:pr-10 md:text-left md:flex-[1_1_40%] lg:flex-[0_0_50%]">
             <Title tag="h1">
-              GATHER YOUR <span className="font-bold">RARE NFT</span> HAS ARIVED
+              UNLEASH YOUR IMAGINATION WITH <span className="whitespace-nowrap">AI-GENERATED NFTS</span>
             </Title>
-            <Text className="my-10 w-[420px]">
-              Get started with the easiest and most secured platform to buy and trade digital <span className="font-bold">ART and NFT</span>
+            <Text className="my-10 lg:w-[420px]">
+              Generate unique images with AI, claim them as NFTs, and unlock limitless potential with our <span className="font-bold whitespace-nowrap">exclusive Pass NFT</span>
             </Text>
-            <Button>
+            <Button >
               Explore More
             </Button>
           </div>
-          <div className="flex-[1_1_50%]">
+          <div className="md:flex-[1_1_60%] lg:flex-[0_0_50%]">
             <Image src={MainImage} alt='The Pass NFT' priority/>
           </div>
         </section>

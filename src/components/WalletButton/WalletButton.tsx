@@ -9,7 +9,7 @@ export default function WalletButton() {
     return account
         ? <div className="flex items-center">
             {!isCorrectNetwork ? <Text className="mr-6">Wrong network!</Text> : null}
-            <Button size='small' hoverText='Disconnect' className='w-[240px]'>
+            <Button size='small'>
                 {`${account.substring(0,4)}...${account.slice(-5)}`}
             </Button>
         </div>

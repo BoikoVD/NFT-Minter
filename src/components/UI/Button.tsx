@@ -1,34 +1,33 @@
-"use client"
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler } from "react";
 
 interface IButton {
     children: React.ReactNode,
     onClick?: MouseEventHandler<HTMLButtonElement>,
-    size?: 'small' | 'medium' | 'large',
-    hoverText?: string | null,
+    styleType?: 'rectangle' | 'parallelogram',
+    size?: 'small' | 'large',
     className?: string,
 };
 
 const styles = {
-    main: 'text-lg text-white transition-all duration-500 bg-button-gradient bg-size-200 bg-pos-0 hover:bg-pos-100 [clip-path:polygon(53px_0%,100%_0%,calc(100%-53px)_100%,0%_100%)]',
-  
+    main: 'text-lg text-white transition-all duration-500 bg-button-gradient bg-size-200 bg-pos-0 hover:bg-pos-100',
+
+    // Style type
+    rectangle: 'rounded-md',
+    parallelogram: '[clip-path:polygon(50px_0%,100%_0%,calc(100%-50px)_100%,0%_100%)]',
+    
     // Sizes
-    small: 'px-14 py-3',
-    medium: 'px-20 py-6',
-    large: 'px-24 py-6',
+    small: 'px-10 py-3 md:px-14',
+    large: 'px-14 py-6 md:px-24',
 };
 
-export default function Button({ children, onClick, size = 'large', hoverText = null, className }: IButton) {
-    const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
+export default function Button({ children, onClick, styleType = 'rectangle', size = 'large', className }: IButton) {
 
     return (<>
         <button 
             onClick={onClick}
-            className={`${styles.main} ${styles[size]} ${className}`}
-            onMouseOver={hoverText ? () => setIsMouseOver(true) : undefined}
-            onMouseOut={hoverText ? () => setIsMouseOver(false) : undefined}
+            className={`${styles.main} ${styles[styleType]} ${styles[size]} ${className}`}
         >
-            {isMouseOver ? hoverText : children}
+            {children}
         </button>
     </>);
 }
