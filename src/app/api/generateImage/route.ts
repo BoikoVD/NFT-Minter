@@ -4,13 +4,24 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
     try {
         const data = await request.json();
+
+        const requestBody: {
+            prompt: string,
+            negative_prompt?: string,
+            aspect_ratio: string,
+            quality: string,
+        } = {
+            prompt: data.prompt,
+            aspect_ratio: '1:1',
+            quality: "LOW",
+        };
+
+        if (data.negativePrompt) {
+            requestBody.negative_prompt = data.negativePrompt;
+        }
         
         const resp = await axios.post(`${process.env.NEXT_PUBLIC_FIREBASE_LIMEWIRE_URL}/image/generation`, 
-            {
-                prompt: data.prompt,
-                aspect_ratio: '1:1',
-                quality: "LOW",
-            },
+            requestBody,
             {
                 headers: {
                     'Content-Type': 'application/json',

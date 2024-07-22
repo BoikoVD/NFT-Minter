@@ -1,12 +1,17 @@
 "use client"
 import axios from "axios";
 import { useWeb3Context } from "@/context/Web3Context";
+import Button from "@/components/UI/Button";
 
 interface IMintNftButton {
     imageUrl: string | null,
+    setIsLoading: React.Dispatch<React.SetStateAction<{
+        state: boolean;
+        text: string;
+    }>>,
 }
 
-export default function MintNftButton({ imageUrl }: IMintNftButton) {
+export default function MintNftButton({ imageUrl, setIsLoading }: IMintNftButton) {
     const { account, minterNFTContract } = useWeb3Context();
 
     const mintHandler = async () => {
@@ -15,6 +20,10 @@ export default function MintNftButton({ imageUrl }: IMintNftButton) {
         if (minterNFTContract === null) return;
 
         try {
+            setIsLoading({
+                state: true,
+                text: 'Saving...'
+            });
             const fileName = Number(await minterNFTContract.methods.totalSupply().call()) + 1;
 
             const response = await axios.post('api/uploadImageData', {
@@ -24,6 +33,10 @@ export default function MintNftButton({ imageUrl }: IMintNftButton) {
             
             console.log('Upload image data response: ', response);
 
+            setIsLoading({
+                state: true,
+                text: 'Minting...'
+            });
             const mintPrice = Number(await minterNFTContract.methods.mintPrice().call());
             const mintRes = await minterNFTContract.methods.mint().send({
                 from: account,
@@ -33,10 +46,21 @@ export default function MintNftButton({ imageUrl }: IMintNftButton) {
             console.log('Mint image response: ', mintRes);
         } catch (e) {
             console.log('Mint NFT ERROR: ', e);
+        } finally {
+            setIsLoading({
+                state: false,
+                text: 'Loading...'
+            });
         }
     }
 
     return (
-        <button onClick={mintHandler}>Mint</button>
+        <Button 
+            onClick={mintHandler}
+            size='small'
+            className="mt-6"
+        >
+            Mint
+        </Button>
     );
 };

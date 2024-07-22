@@ -3,6 +3,7 @@ import { MouseEventHandler } from "react";
 interface IButton {
     children: React.ReactNode,
     onClick?: MouseEventHandler<HTMLButtonElement>,
+    type?: "submit" | "reset" | "button",
     styleType?: 'rectangle' | 'parallelogram',
     size?: 'small' | 'large',
     className?: string,
@@ -20,11 +21,20 @@ const styles = {
     large: 'px-14 py-6 md:px-24',
 };
 
-export default function Button({ children, onClick, styleType = 'rectangle', size = 'large', className }: IButton) {
+export default function Button(props: IButton) {
+    const {
+        children, 
+        onClick, 
+        type = 'button',
+        styleType = 'rectangle', 
+        size = 'large', 
+        className
+    } = props;
 
     return (<>
         <button 
             onClick={onClick}
+            type={type}
             className={`${styles.main} ${styles[styleType]} ${styles[size]} ${className}`}
         >
             {children}

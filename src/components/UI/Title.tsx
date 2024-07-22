@@ -7,7 +7,7 @@ interface ITitle {
 export default function Title({ children, tag = 'h2', className = '' }: ITitle) {
     if (tag === 'h1') {
         return <h1 className={
-            `text-4xl text-white font-spaceGrotesk font-bold leading-loose
+            `text-3xl text-white font-spaceGrotesk font-bold
             md:text-5xl lg:text-6xl lg:leading-normal lg:tracking-wider
             ${className}`
         }>{children}</h1>
