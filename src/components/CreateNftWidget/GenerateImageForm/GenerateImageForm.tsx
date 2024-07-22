@@ -9,6 +9,11 @@ interface IGenerateImageForm {
         state: boolean;
         text: string;
     }>>,
+    isOwnerOfPassNFT: boolean,
+    setIsModalVisible: React.Dispatch<React.SetStateAction<{
+        state: boolean;
+        text: string;
+    }>>
 }
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -20,10 +25,17 @@ interface FormElement extends HTMLFormElement {
    readonly elements: FormElements
 }
 
-export default function GenerateImageForm({ setImageUrl, setIsLoading }: IGenerateImageForm) {
+export default function GenerateImageForm({ setImageUrl, setIsLoading, isOwnerOfPassNFT, setIsModalVisible }: IGenerateImageForm) {
 
     const submitHandler = async (e: FormEvent<FormElement>) => {
         e.preventDefault();
+        if (!isOwnerOfPassNFT) {
+            setIsModalVisible({
+                state: true,
+                text: 'You must mint the Pass NFT at first!'
+            });
+            return;
+        }
         setIsLoading({
             state: true,
             text: 'Generating...'

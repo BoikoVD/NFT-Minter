@@ -1,17 +1,29 @@
 "use client"
 import { useState } from "react";
 import Image from "next/image";
+import { useWeb3Context } from "@/context/Web3Context";
 import GenerateImageForm from "./GenerateImageForm/GenerateImageForm";
 import MintNftButton from "./MintNftButton/MintNftButton";
 import Loading from "../Loading/Loading";
+import Modal from "../UI/Modal";
+import Button from "../UI/Button";
+import Text from "../UI/Text";
 
 export default function CreateNftWidget() {
+    const { isOwnerOfPassNFT } = useWeb3Context();
     const [isLoading, setIsLoading] = useState<{
         state: boolean,
         text: string
     }>({
         state: false,
         text: 'Loading...'
+    });
+    const [isModalVisible, setIsModalVisible] = useState<{
+        state: boolean,
+        text: string
+    }>({
+        state: false,
+        text: ''
     });
     const [imageUrl, setImageUrl] = useState<string | null>(null);
 
@@ -29,9 +41,21 @@ export default function CreateNftWidget() {
                             </div>
                             <MintNftButton imageUrl={imageUrl} setIsLoading={setIsLoading}/>
                         </>
-                        : <GenerateImageForm setImageUrl={setImageUrl} setIsLoading={setIsLoading}/>
+                        : <GenerateImageForm setImageUrl={setImageUrl} setIsLoading={setIsLoading} isOwnerOfPassNFT={isOwnerOfPassNFT} setIsModalVisible={setIsModalVisible}/>
                 }
             </div>
         </div>
+        <Modal
+            isVisible={isModalVisible.state}
+            setIsVisible={setIsModalVisible}
+            modalName="modal"
+        >
+            <Text>
+                {isModalVisible.text}
+            </Text>
+            <Button onClick={() => setIsModalVisible({state: false, text: ''})} size='small' className="mt-6">
+                Ok
+            </Button>
+        </Modal>
     </>);
 };
