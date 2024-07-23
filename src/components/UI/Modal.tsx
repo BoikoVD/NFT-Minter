@@ -1,5 +1,6 @@
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import ReactDOM from 'react-dom';
 
 interface IModal {
@@ -20,11 +21,17 @@ export default function Modal(props: IModal) {
         modalName = "modal",
     } = props;
 
+    const [mounted, setMounted] = useState(false);
+
     const ref = useOutsideClick(() => {
         setIsVisible({state: false, text: ''})
     });
 
-    return ReactDOM.createPortal(
+    useEffect(() => 
+        setMounted(true)
+    , []);
+
+    return mounted ? ReactDOM.createPortal(
         <AnimatePresence mode='wait'>
             {isVisible && (
                 <motion.div
@@ -46,5 +53,5 @@ export default function Modal(props: IModal) {
                 </motion.div>
             )}
         </AnimatePresence>
-    , document.body);
+    , document.body) : null;
 }

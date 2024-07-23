@@ -12,12 +12,19 @@ interface IMintNftButton {
 }
 
 export default function MintNftButton({ imageUrl, setIsLoading }: IMintNftButton) {
-    const { account, minterNFTContract } = useWeb3Context();
+    const { account, minterNFTContract, isCorrectNetwork, setIsSwitchNetworkModalOpen } = useWeb3Context();
 
     const mintHandler = async () => {
         if (imageUrl === null) return;
         if (account === null) return;
         if (minterNFTContract === null) return;
+        if (!isCorrectNetwork) {
+            setIsSwitchNetworkModalOpen({
+                state: true,
+                text: 'Please, switch network to Sepolia Testnet'
+            });
+            return;
+        }
 
         try {
             setIsLoading({

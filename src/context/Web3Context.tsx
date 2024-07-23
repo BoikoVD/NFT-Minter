@@ -11,7 +11,14 @@ interface IWeb3Context {
   passNFTContract: Contract<AbiItem[]> | null,
   minterNFTContract: Contract<AbiItem[]> | null,
   isOwnerOfPassNFT: boolean,
-  connectWallet: () => Promise<void>;
+  isSwitchNetworkModalOpen: {state: boolean, text: string},
+  connectWallet: () => Promise<void>,
+  checkOwningOfPassNFT: (accountAddress: string, contractInstance: Contract<AbiItem[]>) => Promise<void>,
+  setIsSwitchNetworkModalOpen: React.Dispatch<React.SetStateAction<{
+    state: boolean;
+    text: string;
+  }>> ,
+  switchToCorrectNetwork: () => void,
 }
 
 const Web3Context = createContext<IWeb3Context | undefined>(undefined);
@@ -26,6 +33,7 @@ export const useWeb3Context = (): IWeb3Context => {
 
 export const Web3Provider = ({ children }: { children: ReactNode }) => {
   const [isMetaMaskInstalled, setIsMetaMaskInstalled] = useState<boolean>(false);
+  const [web3, setWeb3] = useState<Web3 | null>(null);
   const [account, setAccount] = useState<string | null>(null);
   const [networkId, setNetworkId] = useState<string | null>(null);
   const [isCorrectNetwork, setIsCorrectNetwork] = useState<boolean>(false);
@@ -36,12 +44,21 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
 
   const [isConnecting, setIsConnecting] = useState<boolean>(false);
 
+  const [isSwitchNetworkModalOpen, setIsSwitchNetworkModalOpen] = useState<{
+    state: boolean,
+    text: string
+  }>({
+    state: false,
+    text: 'Please, switch network to Sepolia Testnet'
+  });
+
   const connectWallet = async () => {
     if (isMetaMaskInstalled && !isConnecting) {
       setIsConnecting(true);
       
       try {
         const web3 = new Web3(window.ethereum);
+        setWeb3(web3);
         await window.ethereum.send('eth_requestAccounts');
         const accounts = await web3.eth.getAccounts();
         setAccount(accounts[0]);
@@ -76,7 +93,24 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       console.log('[Web3Context]: Check owning of pass NFT ERROR: ', error);
     }
-  }
+  };
+
+  const switchToCorrectNetwork = async () => {
+    if (web3 && web3.currentProvider && networkId && networkId !== '11155111') {
+      try {
+        await web3.currentProvider.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: Web3.utils.toHex(BigInt(`11155111`)) }],
+        });
+        setIsSwitchNetworkModalOpen({
+          state: false,
+          text: 'Please, switch network to Sepolia Testnet'
+        });
+      } catch (e: unknown) {
+        console.log('[Web3Context]: Switch to correct network ERROR: ', e);
+      }
+    }
+  };
 
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
@@ -114,16 +148,13 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (networkId && networkId === '11155111') {
       setIsCorrectNetwork(true);
+      if (account && passNFTContract) {
+        checkOwningOfPassNFT(account, passNFTContract);
+      }
     } else {
       setIsCorrectNetwork(false);
     }
   }, [networkId]);
-
-  useEffect(() => {
-    if (account && passNFTContract && networkId) {
-      checkOwningOfPassNFT(account, passNFTContract);
-    }
-  }, [account, passNFTContract, networkId])
 
   return (
     <Web3Context.Provider 
@@ -134,7 +165,11 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
         passNFTContract, 
         minterNFTContract,
         isOwnerOfPassNFT, 
-        connectWallet 
+        isSwitchNetworkModalOpen, 
+        connectWallet,
+        checkOwningOfPassNFT,
+        setIsSwitchNetworkModalOpen,
+        switchToCorrectNetwork
       }}
     >
       {children}

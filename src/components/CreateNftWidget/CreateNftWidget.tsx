@@ -10,7 +10,7 @@ import Button from "../UI/Button";
 import Text from "../UI/Text";
 
 export default function CreateNftWidget() {
-    const { isOwnerOfPassNFT } = useWeb3Context();
+    const { isOwnerOfPassNFT, isCorrectNetwork, setIsSwitchNetworkModalOpen } = useWeb3Context();
     const [isLoading, setIsLoading] = useState<{
         state: boolean,
         text: string
@@ -41,7 +41,14 @@ export default function CreateNftWidget() {
                             </div>
                             <MintNftButton imageUrl={imageUrl} setIsLoading={setIsLoading}/>
                         </>
-                        : <GenerateImageForm setImageUrl={setImageUrl} setIsLoading={setIsLoading} isOwnerOfPassNFT={isOwnerOfPassNFT} setIsModalVisible={setIsModalVisible}/>
+                        : <GenerateImageForm 
+                            setImageUrl={setImageUrl} 
+                            setIsLoading={setIsLoading} 
+                            isOwnerOfPassNFT={isOwnerOfPassNFT} 
+                            setIsModalVisible={setIsModalVisible}
+                            isCorrectNetwork={isCorrectNetwork}
+                            setIsSwitchNetworkModalOpen={setIsSwitchNetworkModalOpen}
+                        />
                 }
             </div>
         </div>

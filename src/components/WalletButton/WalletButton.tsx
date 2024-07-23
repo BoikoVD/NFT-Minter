@@ -1,14 +1,39 @@
 "use client"
 import { useWeb3Context } from "@/context/Web3Context";
-import Text from "../UI/Text";
 import Button from "../UI/Button";
+import AlertIcon from '../../assets/icons/alert_icon.svg';
+import EthIcon from '../../assets/icons/ethereum_logo.svg';
+import Text from "../UI/Text";
 
 export default function WalletButton() {
-    const { account, isCorrectNetwork, connectWallet } = useWeb3Context();
+    const { account, isCorrectNetwork, connectWallet, setIsSwitchNetworkModalOpen } = useWeb3Context();
+
+    const switchNetworkHandler = () => {
+        setIsSwitchNetworkModalOpen({
+            state: true,
+            text: 'Please, switch network to Sepolia Testnet'
+        });
+    }
 
     return account
-        ? <div className="flex items-center">
-            {!isCorrectNetwork ? <Text className="mr-6">Wrong network!</Text> : null}
+        ? <div className="flex flex-col items-center gap-6 md:flex-row">
+            <div className="flex items-center">
+                <div className="p-[1px] rounded-full bg-border-gradient ">
+                    <button 
+                        onClick={!isCorrectNetwork ? switchNetworkHandler : undefined}
+                        className="w-[40px] h-[40px] bg-purple rounded-full flex items-center justify-center md:w-[50px] md:h-[50px]"
+                    >
+                        {!isCorrectNetwork
+                            ? <AlertIcon className='h-[60%]'/>
+                            : <EthIcon className='h-[60%]'/>}
+                    </button>
+                </div>
+                <Text className="ml-4 md:hidden">
+                    {!isCorrectNetwork
+                        ? 'Wrong network!'
+                        : 'Sepolia'}
+                </Text>
+            </div>
             <Button size='small'>
                 {`${account.substring(0,4)}...${account.slice(-5)}`}
             </Button>

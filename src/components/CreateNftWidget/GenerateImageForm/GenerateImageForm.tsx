@@ -13,7 +13,12 @@ interface IGenerateImageForm {
     setIsModalVisible: React.Dispatch<React.SetStateAction<{
         state: boolean;
         text: string;
-    }>>
+    }>>,
+    isCorrectNetwork: boolean,
+    setIsSwitchNetworkModalOpen: React.Dispatch<React.SetStateAction<{
+        state: boolean;
+        text: string;
+    }>>,
 }
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -25,10 +30,26 @@ interface FormElement extends HTMLFormElement {
    readonly elements: FormElements
 }
 
-export default function GenerateImageForm({ setImageUrl, setIsLoading, isOwnerOfPassNFT, setIsModalVisible }: IGenerateImageForm) {
+export default function GenerateImageForm(props: IGenerateImageForm) {
+    const {
+        setImageUrl, 
+        setIsLoading, 
+        isOwnerOfPassNFT, 
+        setIsModalVisible,
+        isCorrectNetwork,
+        setIsSwitchNetworkModalOpen
+    } = props;
 
     const submitHandler = async (e: FormEvent<FormElement>) => {
         e.preventDefault();
+
+        if (!isCorrectNetwork) {
+            setIsSwitchNetworkModalOpen({
+                state: true,
+                text: 'Please, switch network to Sepolia Testnet'
+            });
+            return;
+        }
         if (!isOwnerOfPassNFT) {
             setIsModalVisible({
                 state: true,
@@ -36,6 +57,7 @@ export default function GenerateImageForm({ setImageUrl, setIsLoading, isOwnerOf
             });
             return;
         }
+
         setIsLoading({
             state: true,
             text: 'Generating...'

@@ -4,9 +4,17 @@ import Button from "../UI/Button";
 import Text from "../UI/Text";
 
 export default function MintPassNFT() {
-    const { account, passNFTContract, isOwnerOfPassNFT } = useWeb3Context();
+    const { account, passNFTContract, isOwnerOfPassNFT, setIsSwitchNetworkModalOpen, isCorrectNetwork, checkOwningOfPassNFT } = useWeb3Context();
 
     const handleMint = async () => {
+        if (!isCorrectNetwork) {
+            setIsSwitchNetworkModalOpen({
+                state: true,
+                text: 'Please, switch network to Sepolia Testnet'
+            });
+            return;
+        }
+
         if (account && passNFTContract) {
             try {
                 const mintPrice = Number(await passNFTContract.methods.mintPrice().call());
@@ -14,7 +22,8 @@ export default function MintPassNFT() {
                     from: account,
                     value: String(mintPrice)
                 });
-                console.log('Mint Pass NFT response: ', res)
+                console.log('Mint Pass NFT response: ', res);
+                checkOwningOfPassNFT(account, passNFTContract);
             } catch (e) {
                 console.log('Mint Pass NFT ERROR: ', e)
             }
