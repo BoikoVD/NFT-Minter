@@ -1,28 +1,17 @@
 "use client"
 import { useState } from "react";
 import Image from "next/image";
-import { useWeb3Context } from "@/context/Web3Context";
-import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
 import GenerateImageForm from "./GenerateImageForm/GenerateImageForm";
 import MintNftButton from "./MintNftButton/MintNftButton";
 import Loading from "../Loading/Loading";
 
 export default function CreateNftWidget() {
-    const { isOwnerOfPassNFT, isCorrectNetwork } = useWeb3Context();
-    const { openModal } = useSwitchNetworkModal();
     const [isLoading, setIsLoading] = useState<{
         state: boolean,
         text: string
     }>({
         state: false,
         text: 'Loading...'
-    });
-    const [isModalVisible, setIsModalVisible] = useState<{
-        state: boolean,
-        text: string
-    }>({
-        state: false,
-        text: ''
     });
     const [imageUrl, setImageUrl] = useState<string | null>(null);
 
@@ -42,11 +31,7 @@ export default function CreateNftWidget() {
                         </>
                         : <GenerateImageForm 
                             setImageUrl={setImageUrl} 
-                            setIsLoading={setIsLoading} 
-                            isOwnerOfPassNFT={isOwnerOfPassNFT} 
-                            setIsModalVisible={setIsModalVisible}
-                            isCorrectNetwork={isCorrectNetwork}
-                            openSwitchNetworkModal={openModal}
+                            setIsLoading={setIsLoading}
                         />
                 }
             </div>

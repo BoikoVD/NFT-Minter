@@ -5,6 +5,7 @@ import passNFT from "../config/abi/PassNFT.json";
 import minterNFT from "../config/abi/MinterNFT.json";
 
 interface IWeb3Context {
+  isMetaMaskInstalled: boolean,
   account: string | null;
   networkId: string | null;
   isCorrectNetwork: boolean;
@@ -94,12 +95,14 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
     if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
       setIsMetaMaskInstalled(true);
     } else {
-      return alert('Please install metamask ');
+      setIsMetaMaskInstalled(false);
     }
   }, []);
 
   useEffect(() => {
-    connectWallet();
+    if (isMetaMaskInstalled) {
+      connectWallet();
+    }
   }, [isMetaMaskInstalled]);
 
   useEffect(() => {
@@ -137,6 +140,7 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
   return (
     <Web3Context.Provider 
       value={{ 
+        isMetaMaskInstalled,
         account, 
         networkId, 
         isCorrectNetwork, 

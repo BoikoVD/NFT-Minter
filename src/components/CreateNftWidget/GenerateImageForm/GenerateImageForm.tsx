@@ -1,7 +1,12 @@
 import { FormEvent } from "react";
 import axios from "axios";
+import Text from "@/components/UI/Text";
 import Button from "@/components/UI/Button";
 import TextField from "@/components/UI/TextField";
+import { useWeb3Context } from "@/context/Web3Context";
+import { useModal } from "@/context/ModalManager";
+import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
+import { useInstallMetamaskModal } from "@/hooks/modals/useInstallMetamaskModal";
 
 interface IGenerateImageForm {
     setImageUrl: React.Dispatch<React.SetStateAction<string | null>>,
@@ -9,13 +14,6 @@ interface IGenerateImageForm {
         state: boolean;
         text: string;
     }>>,
-    isOwnerOfPassNFT: boolean,
-    setIsModalVisible: React.Dispatch<React.SetStateAction<{
-        state: boolean;
-        text: string;
-    }>>,
-    isCorrectNetwork: boolean,
-    openSwitchNetworkModal: () => void,
 }
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -27,27 +25,24 @@ interface FormElement extends HTMLFormElement {
    readonly elements: FormElements
 }
 
-export default function GenerateImageForm(props: IGenerateImageForm) {
-    const {
-        setImageUrl, 
-        setIsLoading, 
-        isOwnerOfPassNFT, 
-        setIsModalVisible,
-        isCorrectNetwork,
-        openSwitchNetworkModal
-    } = props;
+export default function GenerateImageForm({ setImageUrl, setIsLoading }: IGenerateImageForm) {
+    const { account, isOwnerOfPassNFT, isCorrectNetwork, isMetaMaskInstalled, connectWallet } = useWeb3Context();
+    const { openModal } = useModal();
+    const { openInstallMetamaskModal } = useInstallMetamaskModal();
+    const { openModal: openSwitchNetworkmodal } = useSwitchNetworkModal();
 
     const submitHandler = async (e: FormEvent<FormElement>) => {
         e.preventDefault();
 
         if (!isCorrectNetwork) {
-            openSwitchNetworkModal();
+            openSwitchNetworkmodal();
             return;
         }
         if (!isOwnerOfPassNFT) {
-            setIsModalVisible({
-                state: true,
-                text: 'You must mint the Pass NFT at first!'
+            openModal({
+                content: <Text>You must mint the Pass NFT at first!</Text>,
+                modalName: 'owningWarnModal',
+                type: 'default',
             });
             return;
         }
@@ -87,13 +82,22 @@ export default function GenerateImageForm(props: IGenerateImageForm) {
                 id='negative_prompt_field' 
                 labelText='Negative prompt text'
             />
-            <Button
-                type='submit'
-                size='small'
-                className="mt-6"
-            >
-                Generate
-            </Button>
+            {account
+                ? <Button
+                    type='submit'
+                    size='small'
+                    className="mt-6"
+                >
+                    Generate
+                </Button>
+                : <Button 
+                    onClick={isMetaMaskInstalled ? connectWallet : openInstallMetamaskModal} 
+                    type='button' 
+                    size='small' 
+                    className="mt-6"
+                >
+                    Connect Wallet
+                </Button>}
         </form>
     );
 };

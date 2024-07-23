@@ -5,9 +5,11 @@ import AlertIcon from '../../assets/icons/alert_icon.svg';
 import EthIcon from '../../assets/icons/ethereum_logo.svg';
 import Text from "../UI/Text";
 import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
+import { useInstallMetamaskModal } from "@/hooks/modals/useInstallMetamaskModal";
 
 export default function WalletButton() {
-    const { account, isCorrectNetwork, connectWallet } = useWeb3Context();
+    const { account, isCorrectNetwork, connectWallet, isMetaMaskInstalled } = useWeb3Context();
+    const { openInstallMetamaskModal } = useInstallMetamaskModal();
     const { openModal } = useSwitchNetworkModal();
 
     const switchNetworkHandler = () => {
@@ -37,7 +39,7 @@ export default function WalletButton() {
                 {`${account.substring(0,4)}...${account.slice(-5)}`}
             </Button>
         </div>
-        : <Button onClick={connectWallet} size='small'>
+        : <Button onClick={isMetaMaskInstalled ? connectWallet : openInstallMetamaskModal} size='small'>
             Connect Wallet
         </Button>;
 };

@@ -1,16 +1,18 @@
 "use client"
 import { useWeb3Context } from "@/context/Web3Context";
 import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
+import { useInstallMetamaskModal } from "@/hooks/modals/useInstallMetamaskModal";
 import Button from "../UI/Button";
 import Text from "../UI/Text";
 
 export default function MintPassNFT() {
-    const { account, passNFTContract, isOwnerOfPassNFT, isCorrectNetwork, checkOwningOfPassNFT } = useWeb3Context();
+    const { isMetaMaskInstalled, account, passNFTContract, isOwnerOfPassNFT, isCorrectNetwork, checkOwningOfPassNFT, connectWallet } = useWeb3Context();
+    const { openInstallMetamaskModal } = useInstallMetamaskModal();
     const { openModal } = useSwitchNetworkModal();
 
     const handleMint = async () => {
         if (!isCorrectNetwork) {
-            openModal()
+            openModal();
             return;
         }
 
@@ -38,8 +40,8 @@ export default function MintPassNFT() {
                 ? <Button onClick={handleMint}>
                     Mint
                 </Button>
-                : <Text>
-                    You must connect a wallet to mint!
-                </Text>
+                : <Button onClick={isMetaMaskInstalled ? connectWallet : openInstallMetamaskModal}>
+                    Connect Wallet
+                </Button>
     );
 };
