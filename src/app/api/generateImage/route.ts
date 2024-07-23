@@ -20,14 +20,14 @@ export async function POST(request: NextRequest) {
             requestBody.negative_prompt = data.negativePrompt;
         }
         
-        const resp = await axios.post(`${process.env.NEXT_PUBLIC_FIREBASE_LIMEWIRE_URL}/image/generation`, 
+        const resp = await axios.post(`${process.env.NEXT_PUBLIC_LIMEWIRE_URL}/image/generation`, 
             requestBody,
             {
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Api-Version': 'v1',
                     Accept: 'application/json',
-                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_FIREBASE_LIMEWIRE_API_KEY}`,
+                    Authorization: `Bearer ${process.env.NEXT_PUBLIC_LIMEWIRE_API_KEY}`,
                 }
             }
         );
