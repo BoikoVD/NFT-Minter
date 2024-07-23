@@ -3,10 +3,12 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import ReactDOM from 'react-dom';
 import Button from "../UI/Button";
+import Text from "../UI/Text";
 
 interface IModal {
     isOpen: boolean,
-    closeHandler: () => void
+    closeHandler: () => void,
+    type: 'default' | 'error',
     children: React.ReactNode,
     modalKey: string,
     actionText: string,
@@ -20,7 +22,8 @@ export default function Modal(props: IModal) {
         children,
         modalKey,
         actionText,
-        actionHandler
+        actionHandler,
+        type,
     } = props;
 
     const [mounted, setMounted] = useState(false);
@@ -47,6 +50,7 @@ export default function Modal(props: IModal) {
                         <span className="w-full h-[2px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rotate-[45deg] bg-white"/>
                         <span className="w-full h-[2px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rotate-[-45deg] bg-white"/>
                     </button>
+                    {type === 'error' && <Text className="mb-2" size='large' color='red'>ERROR</Text>}
                     {children}
                     <Button size='small' className="mt-6" onClick={actionHandler}>
                         {actionText}

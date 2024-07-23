@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Poppins } from 'next/font/google'
 import { Web3Provider } from "@/context/Web3Context";
 import { ModalManager } from "@/context/ModalManager";
+import ErrorBoundary from "@/HOC/ErrorBoundary";
 import "./globals.css";
  
 const spaceGrotesk = Space_Grotesk({ 
@@ -26,7 +27,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={`${poppins.variable} ${spaceGrotesk.variable} bg-layout-gradient`}>
         <Web3Provider>
           <ModalManager>
-            {children}
+            <ErrorBoundary>
+              {children}
+            </ErrorBoundary>
           </ModalManager>
         </Web3Provider>
       </body>

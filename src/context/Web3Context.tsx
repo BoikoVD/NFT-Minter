@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { AbiItem, Contract, Web3 } from 'web3';
 import passNFT from "../config/abi/PassNFT.json";
 import minterNFT from "../config/abi/MinterNFT.json";
+import constants from '@/config/constants';
 
 interface IWeb3Context {
   isMetaMaskInstalled: boolean,
@@ -15,6 +16,8 @@ interface IWeb3Context {
   connectWallet: () => Promise<void>,
   checkOwningOfPassNFT: (accountAddress: string, contractInstance: Contract<AbiItem[]>) => Promise<void>,
   switchToCorrectNetwork: (callback: () => void) => void,
+  error: { code?: Number, message: string } | null,
+  clearError: () => void
 }
 
 const Web3Context = createContext<IWeb3Context | undefined>(undefined);
@@ -31,6 +34,12 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
   const [isOwnerOfPassNFT, setIsOwnerOfPassNFT] = useState<boolean>(false);
 
   const [isConnecting, setIsConnecting] = useState<boolean>(false);
+
+  const [error, setError] = useState<{ code?: Number, message: string } | null>(null);
+
+  const clearError = () => {
+    setError(null);
+  };
 
   const connectWallet = async () => {
     if (isMetaMaskInstalled && !isConnecting) {
@@ -53,8 +62,12 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
 
         const minterNFTContract = new web3.eth.Contract(minterNFT.abi, process.env.NEXT_PUBLIC_MINTER_NFT_CONTRACT_ADDRESS);
         setMinterNFTContract(minterNFTContract);
-      } catch (error) {
-        console.log('[Web3Context]: ConnectWallet ERROR: ', error);
+      } catch (e: unknown) {
+        console.log('[Web3Context]: ConnectWallet ERROR: ', e);
+        const error = e as { code?: number, message?: string };
+        if (error?.code !== constants.MM_ERROR_CODE__USER_REJECT_REQUEST) {
+          setError({ message: error?.message ?? 'Something went wrong. Please try later!' });
+        }
       } finally {
         setIsConnecting(false);
       }
@@ -70,23 +83,27 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
         setIsOwnerOfPassNFT(false)
       }
       console.log('[Web3Context]: Check owning of pass NFT response: ', amount)
-    } catch (error) {
-      console.log('[Web3Context]: Check owning of pass NFT ERROR: ', error);
+    } catch (e: unknown) {
+      console.log('[Web3Context]: Check owning of pass NFT ERROR: ', e);
+      const error = e as { code?: number, message?: string };
+      setError({ message: error?.message ?? 'Something went wrong. Please try later!' });
     }
   };
 
   const switchToCorrectNetwork = async (callback?: () => void) => {
-    if (web3 && web3.currentProvider && networkId && networkId !== '11155111') {
+    if (web3 && web3.currentProvider && networkId && networkId !== constants.SEPOLIA_NETWORK_ID) {
       try {
         await web3.currentProvider.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: Web3.utils.toHex(BigInt(`11155111`)) }],
+          params: [{ chainId: Web3.utils.toHex(BigInt(constants.SEPOLIA_NETWORK_ID)) }],
         });
         if (callback) {
           callback();
         }
       } catch (e: unknown) {
         console.log('[Web3Context]: Switch to correct network ERROR: ', e);
+        const error = e as { code?: number, message?: string };
+        setError({ message: error?.message ?? 'Something went wrong. Please try later!' });
       }
     }
   };
@@ -127,7 +144,7 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
   }, [account]);
 
   useEffect(() => {
-    if (networkId && networkId === '11155111') {
+    if (networkId && networkId === constants.SEPOLIA_NETWORK_ID) {
       setIsCorrectNetwork(true);
       if (account && passNFTContract) {
         checkOwningOfPassNFT(account, passNFTContract);
@@ -149,7 +166,9 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
         isOwnerOfPassNFT,  
         connectWallet,
         checkOwningOfPassNFT,
-        switchToCorrectNetwork
+        switchToCorrectNetwork,
+        error,
+        clearError
       }}
     >
       {children}

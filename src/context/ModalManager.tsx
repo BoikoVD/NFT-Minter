@@ -38,6 +38,7 @@ export const ModalManager = ({ children }: { children: ReactNode }) => {
                 key={modalData.modalName + index} 
                 modalKey={modalData.modalName}
                 isOpen={true} 
+                type={modalData.type}
                 closeHandler={closeModal}
                 actionText={modalData.actionText ?? 'Close' }
                 actionHandler={modalData.actionHandler ?? closeModal}

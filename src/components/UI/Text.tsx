@@ -1,9 +1,23 @@
 interface IText {
     children: React.ReactNode,
+    size?: 'small' | 'large',
+    color?: 'white' | 'red', 
     className?: string,
 };
 
-export default function Text({ children, className = '' }: IText) {
+const styles = {
+    main: 'md:leading-loose md:tracking-wider',
     
-    return <p className={`text-lg text-white md:text-sm md:leading-loose md:tracking-wider ${className}`}>{children}</p>;
+    // Sizes
+    small: 'text-sm md:text-lg',
+    large: 'text-lg md:text-2xl',
+
+    // Colors
+    white: 'text-white',
+    red: 'text-red-500'
+};
+
+export default function Text({ children, className = '', size = 'small', color = 'white' }: IText) {
+    
+    return <p className={`${styles.main} ${styles[size]} ${styles[color]}`}>{children}</p>;
 };
