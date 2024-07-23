@@ -1,17 +1,16 @@
 "use client"
 import { useWeb3Context } from "@/context/Web3Context";
+import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
 import Button from "../UI/Button";
 import Text from "../UI/Text";
 
 export default function MintPassNFT() {
-    const { account, passNFTContract, isOwnerOfPassNFT, setIsSwitchNetworkModalOpen, isCorrectNetwork, checkOwningOfPassNFT } = useWeb3Context();
+    const { account, passNFTContract, isOwnerOfPassNFT, isCorrectNetwork, checkOwningOfPassNFT } = useWeb3Context();
+    const { openModal } = useSwitchNetworkModal();
 
     const handleMint = async () => {
         if (!isCorrectNetwork) {
-            setIsSwitchNetworkModalOpen({
-                state: true,
-                text: 'Please, switch network to Sepolia Testnet'
-            });
+            openModal()
             return;
         }
 

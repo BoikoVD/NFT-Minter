@@ -4,15 +4,14 @@ import Button from "../UI/Button";
 import AlertIcon from '../../assets/icons/alert_icon.svg';
 import EthIcon from '../../assets/icons/ethereum_logo.svg';
 import Text from "../UI/Text";
+import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
 
 export default function WalletButton() {
-    const { account, isCorrectNetwork, connectWallet, setIsSwitchNetworkModalOpen } = useWeb3Context();
+    const { account, isCorrectNetwork, connectWallet } = useWeb3Context();
+    const { openModal } = useSwitchNetworkModal();
 
     const switchNetworkHandler = () => {
-        setIsSwitchNetworkModalOpen({
-            state: true,
-            text: 'Please, switch network to Sepolia Testnet'
-        });
+        openModal();
     }
 
     return account

@@ -2,15 +2,14 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useWeb3Context } from "@/context/Web3Context";
+import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
 import GenerateImageForm from "./GenerateImageForm/GenerateImageForm";
 import MintNftButton from "./MintNftButton/MintNftButton";
 import Loading from "../Loading/Loading";
-import Modal from "../UI/Modal";
-import Button from "../UI/Button";
-import Text from "../UI/Text";
 
 export default function CreateNftWidget() {
-    const { isOwnerOfPassNFT, isCorrectNetwork, setIsSwitchNetworkModalOpen } = useWeb3Context();
+    const { isOwnerOfPassNFT, isCorrectNetwork } = useWeb3Context();
+    const { openModal } = useSwitchNetworkModal();
     const [isLoading, setIsLoading] = useState<{
         state: boolean,
         text: string
@@ -47,22 +46,10 @@ export default function CreateNftWidget() {
                             isOwnerOfPassNFT={isOwnerOfPassNFT} 
                             setIsModalVisible={setIsModalVisible}
                             isCorrectNetwork={isCorrectNetwork}
-                            setIsSwitchNetworkModalOpen={setIsSwitchNetworkModalOpen}
+                            openSwitchNetworkModal={openModal}
                         />
                 }
             </div>
         </div>
-        <Modal
-            isVisible={isModalVisible.state}
-            setIsVisible={setIsModalVisible}
-            modalName="modal"
-        >
-            <Text>
-                {isModalVisible.text}
-            </Text>
-            <Button onClick={() => setIsModalVisible({state: false, text: ''})} size='small' className="mt-6">
-                Ok
-            </Button>
-        </Modal>
     </>);
 };

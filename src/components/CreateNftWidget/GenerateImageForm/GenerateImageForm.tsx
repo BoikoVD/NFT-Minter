@@ -15,10 +15,7 @@ interface IGenerateImageForm {
         text: string;
     }>>,
     isCorrectNetwork: boolean,
-    setIsSwitchNetworkModalOpen: React.Dispatch<React.SetStateAction<{
-        state: boolean;
-        text: string;
-    }>>,
+    openSwitchNetworkModal: () => void,
 }
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -37,17 +34,14 @@ export default function GenerateImageForm(props: IGenerateImageForm) {
         isOwnerOfPassNFT, 
         setIsModalVisible,
         isCorrectNetwork,
-        setIsSwitchNetworkModalOpen
+        openSwitchNetworkModal
     } = props;
 
     const submitHandler = async (e: FormEvent<FormElement>) => {
         e.preventDefault();
 
         if (!isCorrectNetwork) {
-            setIsSwitchNetworkModalOpen({
-                state: true,
-                text: 'Please, switch network to Sepolia Testnet'
-            });
+            openSwitchNetworkModal();
             return;
         }
         if (!isOwnerOfPassNFT) {

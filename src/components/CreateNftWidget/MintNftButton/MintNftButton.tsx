@@ -1,6 +1,7 @@
 "use client"
 import axios from "axios";
 import { useWeb3Context } from "@/context/Web3Context";
+import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
 import Button from "@/components/UI/Button";
 
 interface IMintNftButton {
@@ -12,17 +13,15 @@ interface IMintNftButton {
 }
 
 export default function MintNftButton({ imageUrl, setIsLoading }: IMintNftButton) {
-    const { account, minterNFTContract, isCorrectNetwork, setIsSwitchNetworkModalOpen } = useWeb3Context();
+    const { account, minterNFTContract, isCorrectNetwork } = useWeb3Context();
+    const { openModal } = useSwitchNetworkModal();
 
     const mintHandler = async () => {
         if (imageUrl === null) return;
         if (account === null) return;
         if (minterNFTContract === null) return;
         if (!isCorrectNetwork) {
-            setIsSwitchNetworkModalOpen({
-                state: true,
-                text: 'Please, switch network to Sepolia Testnet'
-            });
+            openModal();
             return;
         }
 

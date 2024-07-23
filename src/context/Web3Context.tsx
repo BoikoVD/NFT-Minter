@@ -1,8 +1,8 @@
 "use client"
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { AbiItem, Contract, Web3 } from 'web3';
-import passNFT from "./PassNFT.json";
-import minterNFT from "./MinterNFT.json";
+import passNFT from "../config/abi/PassNFT.json";
+import minterNFT from "../config/abi/MinterNFT.json";
 
 interface IWeb3Context {
   account: string | null;
@@ -11,25 +11,12 @@ interface IWeb3Context {
   passNFTContract: Contract<AbiItem[]> | null,
   minterNFTContract: Contract<AbiItem[]> | null,
   isOwnerOfPassNFT: boolean,
-  isSwitchNetworkModalOpen: {state: boolean, text: string},
   connectWallet: () => Promise<void>,
   checkOwningOfPassNFT: (accountAddress: string, contractInstance: Contract<AbiItem[]>) => Promise<void>,
-  setIsSwitchNetworkModalOpen: React.Dispatch<React.SetStateAction<{
-    state: boolean;
-    text: string;
-  }>> ,
-  switchToCorrectNetwork: () => void,
+  switchToCorrectNetwork: (callback: () => void) => void,
 }
 
 const Web3Context = createContext<IWeb3Context | undefined>(undefined);
-
-export const useWeb3Context = (): IWeb3Context => {
-  const context = useContext(Web3Context);
-  if (!context) {
-    throw new Error('useWeb3 must be used within a Web3Provider');
-  }
-  return context;
-};
 
 export const Web3Provider = ({ children }: { children: ReactNode }) => {
   const [isMetaMaskInstalled, setIsMetaMaskInstalled] = useState<boolean>(false);
@@ -43,14 +30,6 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
   const [isOwnerOfPassNFT, setIsOwnerOfPassNFT] = useState<boolean>(false);
 
   const [isConnecting, setIsConnecting] = useState<boolean>(false);
-
-  const [isSwitchNetworkModalOpen, setIsSwitchNetworkModalOpen] = useState<{
-    state: boolean,
-    text: string
-  }>({
-    state: false,
-    text: 'Please, switch network to Sepolia Testnet'
-  });
 
   const connectWallet = async () => {
     if (isMetaMaskInstalled && !isConnecting) {
@@ -95,17 +74,16 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const switchToCorrectNetwork = async () => {
+  const switchToCorrectNetwork = async (callback?: () => void) => {
     if (web3 && web3.currentProvider && networkId && networkId !== '11155111') {
       try {
         await web3.currentProvider.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: Web3.utils.toHex(BigInt(`11155111`)) }],
         });
-        setIsSwitchNetworkModalOpen({
-          state: false,
-          text: 'Please, switch network to Sepolia Testnet'
-        });
+        if (callback) {
+          callback();
+        }
       } catch (e: unknown) {
         console.log('[Web3Context]: Switch to correct network ERROR: ', e);
       }
@@ -164,15 +142,21 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
         isCorrectNetwork, 
         passNFTContract, 
         minterNFTContract,
-        isOwnerOfPassNFT, 
-        isSwitchNetworkModalOpen, 
+        isOwnerOfPassNFT,  
         connectWallet,
         checkOwningOfPassNFT,
-        setIsSwitchNetworkModalOpen,
         switchToCorrectNetwork
       }}
     >
       {children}
     </Web3Context.Provider>
   );
+};
+
+export const useWeb3Context = (): IWeb3Context => {
+  const context = useContext(Web3Context);
+  if (!context) {
+    throw new Error('useWeb3 must be used within a Web3Provider');
+  }
+  return context;
 };
