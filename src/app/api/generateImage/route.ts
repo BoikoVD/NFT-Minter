@@ -37,11 +37,12 @@ export async function POST(request: NextRequest) {
             message: 'Data received and API call successful',
             apiResponse: resp.data,
         });
-    } catch (error) {
-        console.error('Error processing request:', error);
+    } catch (e: unknown) {
+        console.error('Error processing request:', e);
+        const error = e as { code?: number, message?: string };
         return NextResponse.json({
             success: false,
-            message: 'Error processing request',
+            message: error?.message ?? 'Something went wrong...',
             error: error,
         });
     }

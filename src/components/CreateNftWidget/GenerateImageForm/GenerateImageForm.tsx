@@ -7,6 +7,7 @@ import { useWeb3Context } from "@/context/Web3Context";
 import { useModal } from "@/context/ModalManager";
 import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
 import { useInstallMetamaskModal } from "@/hooks/modals/useInstallMetamaskModal";
+import { useErrorModal } from "@/hooks/modals/useErrorModal";
 
 interface IGenerateImageForm {
     setImageUrl: React.Dispatch<React.SetStateAction<string | null>>,
@@ -30,6 +31,7 @@ export default function GenerateImageForm({ setImageUrl, setIsLoading }: IGenera
     const { openModal } = useModal();
     const { openInstallMetamaskModal } = useInstallMetamaskModal();
     const { openModal: openSwitchNetworkmodal } = useSwitchNetworkModal();
+    const { openErrorModal } = useErrorModal();
 
     const submitHandler = async (e: FormEvent<FormElement>) => {
         e.preventDefault();
@@ -58,9 +60,16 @@ export default function GenerateImageForm({ setImageUrl, setIsLoading }: IGenera
 
         console.log('[LimeWire]: Create Image response: ', resp);
 
-        if (resp?.data?.apiResponse?.data[0]?.asset_url) {
-            setImageUrl(resp.data.apiResponse.data[0].asset_url);
+        if (resp.data.success) {
+            if (resp?.data?.apiResponse?.data[0]?.asset_url) {
+                setImageUrl(resp.data.apiResponse.data[0].asset_url);
+            } else {
+                openErrorModal('Something went wrong...');
+            }
+        } else {
+            openErrorModal(resp.data.message);
         }
+        
         setIsLoading({
             state: false,
             text: 'Loading...'

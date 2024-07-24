@@ -4,10 +4,10 @@ import { useModal } from "@/context/ModalManager";
 export const useErrorModal = () => {
     const {openModal: open, closeModal: close} = useModal();
 
-    const openErrorModal = (message: string) => {
+    const openErrorModal = (message?: string) => {
         open({
             content: <>
-                <Text>{message}</Text>
+                <Text>{message ?? 'Something went wrong...'}</Text>
             </>,
             modalName: 'errorModal',
             type: 'error',

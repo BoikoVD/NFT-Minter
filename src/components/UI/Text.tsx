@@ -19,5 +19,5 @@ const styles = {
 
 export default function Text({ children, className = '', size = 'small', color = 'white' }: IText) {
     
-    return <p className={`${styles.main} ${styles[size]} ${styles[color]}`}>{children}</p>;
+    return <p className={`${styles.main} ${styles[size]} ${styles[color]} ${className}`}>{children}</p>;
 };
