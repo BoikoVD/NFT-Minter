@@ -5,16 +5,18 @@ import Text from "@/components/UI/Text";
 import Title from "@/components/UI/Title";
 import Image from "next/image";
 import MainImage from '../assets/images/main.webp';
+import GradientBox from "@/components/UI/GradientBox";
+import CountdownTimer from "@/components/CountdownTimer/CountdownTimer";
 
 export default function Home() {
   return (
     <main className="font-poppins z-10 relative">
       <PageContainer>
         <Header />
-        <section className="w-full min-h-screen flex-auto flex flex-col items-center mt-[150px] md:flex-row md:mt-0">
-          <div className="text-center md:pr-10 md:text-left md:flex-[1_1_40%] lg:flex-[0_0_50%]">
+        <section className="w-full min-h-screen flex-auto flex flex-col items-center pt-[100px] md:flex-row md:pt-[150px] pb-10 xl:max-h-screen">
+          <div className="text-center md:pr-10 md:text-left md:flex-[0_0_50%]">
             <Title tag="h1">
-              UNLEASH YOUR IMAGINATION WITH <span className="whitespace-nowrap">AI-GENERATED NFTS</span>
+              UNLEASH YOUR IMAGINATION WITH <span className="whitespace-nowrap">AI-GENERATED</span> NFTS
             </Title>
             <Text className="my-10 lg:w-[420px]">
               Generate unique images with AI, claim them as NFTs, and unlock limitless potential with our <span className="font-bold whitespace-nowrap">exclusive Pass NFT</span>
@@ -22,9 +24,29 @@ export default function Home() {
             <Button >
               Explore More
             </Button>
+            <div className="flex flex-col justify-center gap-8 mt-8 sm:flex-row md:justify-start xl:gap-14 xl:mt-14">
+              <p className="text-white text-center">
+                <span className="text-2xl font-bold xl:text-4xl">43 k +</span><br/> NFTs created
+              </p>
+              <p className="text-white text-center">
+                <span className="text-2xl font-bold xl:text-4xl">18 k +</span><br/> Pass NFTs minted
+              </p>
+              <p className="text-white text-center">
+                <span className="text-2xl font-bold xl:text-4xl">7 k +</span><br/> Unique wallets
+              </p>
+            </div>
           </div>
-          <div className="md:flex-[1_1_60%] lg:flex-[0_0_50%]">
-            <Image src={MainImage} alt='The Pass NFT' priority/>
+          <div className="flex flex-col h-full items-center mt-6 md:mt-0 md:flex-[0_0_50%]">
+            <Image src={MainImage} alt='The Pass NFT' priority className="sm:max-w-[400px] md:max-w-[100%] lg:w-[70%]"/>
+            <GradientBox className="flex flex-col p-4 items-center">
+              <Text className="mb-2 text-center">
+                Hurry up to mint at a reduced price
+              </Text>
+              <CountdownTimer/>
+              <Button size='small' className="mt-8">
+                Mint
+              </Button>
+            </GradientBox>
           </div>
         </section>
       </PageContainer>
