@@ -8,7 +8,7 @@ export default function Create() {
         <main className="font-poppins z-10 relative">
         <PageContainer>
             <Header />
-            <section className="w-full h-screen flex-auto flex flex-col items-center justify-center pt-[80px]">
+            <section className="w-full min-h-screen flex-auto flex flex-col items-center justify-center pt-[100px] pb-6 md:pt-[150px]">
                 <CreateNftWidget/>
             </section>
         </PageContainer>

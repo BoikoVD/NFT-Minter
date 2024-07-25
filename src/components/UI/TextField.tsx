@@ -2,6 +2,7 @@ interface ITextField {
     name: string,
     id: string,
     labelText?: string,
+    isRequired?: boolean,
 }
 
 export default function TextField(props: ITextField) {
@@ -9,6 +10,7 @@ export default function TextField(props: ITextField) {
         name,
         id,
         labelText,
+        isRequired = false
     } = props;
 
     return (
@@ -25,6 +27,7 @@ export default function TextField(props: ITextField) {
                     name={name}
                     rows={3}
                     draggable={false}
+                    required={isRequired}
                     className="rounded bg-purple text-white py-2 px-3 w-full resize-none mb-[-7px]"
                 />
             </div>

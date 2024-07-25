@@ -14,7 +14,7 @@ export default function Mint() {
     <main className="font-poppins z-10 relative">
       <PageContainer>
         <Header />
-        <section className="w-full min-h-screen flex-auto flex flex-col items-center justify-center pt-[95px] pb-6 md:pt-[150px]">
+        <section className="w-full min-h-screen flex-auto flex flex-col items-center justify-center pt-[100px] pb-6 md:pt-[150px]">
           <GradientBox className="p-6 flex flex-col items-center gap-10 md:p-10 lg:flex-row lg:items-start lg:gap-20">
             <div className="max-w-[300px] lg:max-w-[500px] lg:min-w-[300px]">
               <Image src={PassNFTImage} alt="pass nft"/>

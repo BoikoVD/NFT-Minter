@@ -96,7 +96,6 @@ export default function MintNftButton({ imageUrl, setIsLoading }: IMintNftButton
         <Button 
             onClick={mintHandler}
             size='small'
-            className="mt-6"
         >
             Mint
         </Button>

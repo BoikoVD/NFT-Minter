@@ -15,6 +15,7 @@ interface IGenerateImageForm {
         state: boolean;
         text: string;
     }>>,
+    calssName?: string
 }
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -26,7 +27,7 @@ interface FormElement extends HTMLFormElement {
    readonly elements: FormElements
 }
 
-export default function GenerateImageForm({ setImageUrl, setIsLoading }: IGenerateImageForm) {
+export default function GenerateImageForm({ setImageUrl, setIsLoading, calssName }: IGenerateImageForm) {
     const { account, isOwnerOfPassNFT, isCorrectNetwork, isMetaMaskInstalled, connectWallet } = useWeb3Context();
     const { openModal } = useModal();
     const { openInstallMetamaskModal } = useInstallMetamaskModal();
@@ -53,6 +54,11 @@ export default function GenerateImageForm({ setImageUrl, setIsLoading }: IGenera
             state: true,
             text: 'Generating...'
         });
+
+        if (window) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
         const resp = await axios.post('api/generateImage', {
             prompt: e.currentTarget.prompt.value,
             negativePrompt: e.currentTarget.negativePrompt.value
@@ -79,17 +85,18 @@ export default function GenerateImageForm({ setImageUrl, setIsLoading }: IGenera
     return (
         <form 
             onSubmit={submitHandler}
-            className="flex flex-col items-center w-full"
+            className={`flex flex-col items-center w-full ${calssName}`}
         >
             <TextField 
                 name="prompt" 
                 id='prompt_field' 
-                labelText='Prompt text'
+                labelText='Prompt'
+                isRequired={true}
             />
             <TextField 
                 name="negativePrompt" 
                 id='negative_prompt_field' 
-                labelText='Negative prompt text'
+                labelText='Negative prompt'
             />
             {account
                 ? <Button
