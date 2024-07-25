@@ -8,7 +8,7 @@ import MainImage from '../assets/images/main.webp';
 
 export default function Home() {
   return (
-    <main className="font-poppins">
+    <main className="font-poppins z-10 relative">
       <PageContainer>
         <Header />
         <section className="w-full min-h-screen flex-auto flex flex-col items-center mt-[150px] md:flex-row md:mt-0">

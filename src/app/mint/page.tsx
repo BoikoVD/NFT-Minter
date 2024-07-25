@@ -6,7 +6,7 @@ import PassNFTImage from '../../assets/images/PassNFT.webp';
 
 export default function Mint() {
   return (
-    <main className="font-poppins">
+    <main className="font-poppins z-10 relative">
       <PageContainer>
         <Header />
         <section className="w-full h-screen flex-auto flex flex-col items-center justify-center pt-[80px]">
