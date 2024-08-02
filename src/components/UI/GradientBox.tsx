@@ -34,16 +34,18 @@ export default function GradientBox(props: IGradientBox) {
     
     return (<>
         <div 
-            className={`relative ${className}`}
+            className={`relative p-[1.5px]`}
             ref={ref}
         >
-            {children}
-            <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute top-0 left-0 z-[-1]">
-                <rect x="1" y="1" width={width - 2} height={height - 2} rx="10" stroke="url(#paint0_linear_17_755)" stroke-width="2"/>
+            <div className={`rounded-[10px] relative z-[1] ${className}`}>
+                {children}
+            </div>
+            <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute top-0 left-0 z-[0]">
+                <rect x="1" y="1" width={width >= 2 ? width - 2 : width} height={height >= 2 ? height - 2 : height} rx="10" stroke="url(#paint0_linear_17_755)" strokeWidth="2"/>
                 <defs>
                     <linearGradient id="paint0_linear_17_755" x1={(width / 2).toFixed(0)} y1="0" x2={(width / 2).toFixed(0)} y2={height} gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#5500FF"/>
-                        <stop offset="1" stop-color="#FF00BF"/>
+                        <stop stopColor="#5500FF"/>
+                        <stop offset="1" stopColor="#FF00BF"/>
                     </linearGradient>
                 </defs>
             </svg>

@@ -10,7 +10,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         'spaceGrotesk': ['var(--font-spaceGrotesk)'],
-        'poppins': ['var(--font-poppins)'],
+        'courierPrime': ['var(--font-courierPrime)'],
       },
       colors: {
         'white': '#FFFFFF',

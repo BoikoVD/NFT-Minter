@@ -5,7 +5,7 @@ import PageContainer from "@/components/UI/PageContainer";
 export default function Create() {
 
     return (
-        <main className="font-poppins z-10 relative">
+        <main className="font-courierPrime z-10 relative">
         <PageContainer>
             <Header />
             <section className="w-full min-h-screen flex-auto flex flex-col items-center justify-center pt-[100px] pb-6 md:pt-[150px]">

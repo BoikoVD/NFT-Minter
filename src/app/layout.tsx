@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Poppins } from 'next/font/google'
+import { Space_Grotesk, Courier_Prime } from 'next/font/google'
 import { Web3Provider } from "@/context/Web3Context";
 import { ModalManager } from "@/context/ModalManager";
 import ErrorBoundary from "@/HOC/ErrorBoundary";
@@ -11,10 +11,10 @@ const spaceGrotesk = Space_Grotesk({
     weight: ['300', '400', '700'],
     variable: '--font-spaceGrotesk',
 });
-const poppins = Poppins({ 
-    subsets: ["latin"],
+const courierPrime = Courier_Prime({ 
+    subsets: ['latin'],
     weight: ['400', '700'],
-    variable: '--font-poppins',
+    variable: '--font-courierPrime',
 });
 
 export const metadata: Metadata = {
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${spaceGrotesk.variable} bg-layout-gradient`}>
+      <body className={`${courierPrime.variable} ${spaceGrotesk.variable} bg-layout-gradient`}>
         <Web3Provider>
           <ModalManager>
             <ErrorBoundary>

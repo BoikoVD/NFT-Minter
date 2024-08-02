@@ -11,7 +11,7 @@ const liStyle = "pl-6 relative before:absolute before:top-[50%] before:left-0 be
 
 export default function Mint() {
   return (
-    <main className="font-poppins z-10 relative">
+    <main className="font-courierPrime z-10 relative">
       <PageContainer>
         <Header />
         <section className="w-full min-h-screen flex-auto flex flex-col items-center justify-center pt-[100px] pb-6 md:pt-[150px]">
