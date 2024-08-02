@@ -4,12 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import WalletButton from "../WalletButton/WalletButton";
 import LogoImage from '../../assets/images/logo.webp';
+import useScrollPosition from "@/hooks/useScrollPosition";
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const scrollPosition = useScrollPosition();
 
     return (<>
-        <header className="px-5 w-full py-4 fixed top-0 left-0 z-10 bg-purple md:py-9 md:bg-transparent">
+        <header className={`px-5 w-full py-4 fixed top-0 left-0 z-10 transition-all duration-300 bg-purple md:py-8 md:bg-transparent ${scrollPosition >= 10 ? 'md:bg-purple' : 'md:bg-transparent'}`}>
             <div className="max-w-[1425px] mx-auto flex justify-between items-center">
                 <div className="relative flex flex-col items-center z-[100] w-[120px] md:w-[150px]">
                     <Image src={LogoImage} alt='logo image' objectFit="cover" fill={false} />
