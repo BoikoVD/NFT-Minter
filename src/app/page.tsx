@@ -6,6 +6,7 @@ import Title from "@/components/UI/Title";
 import GradientBox from "@/components/UI/GradientBox";
 import CountdownTimer from "@/components/CountdownTimer/CountdownTimer";
 import MainAnimatedImages from "@/components/MainAnimatedImages/MainAnimatedImages";
+import HowItWorksContent from "@/components/HowItWorksContent/HowItWorksContent";
 
 export default function Home() {
   return (
@@ -47,6 +48,12 @@ export default function Home() {
               </Button>
             </GradientBox>
           </div>
+        </section>
+        <section className="flex flex-col items-center py-10">
+          <Title tag="h2">
+            HOW IT WORKS
+          </Title>
+          <HowItWorksContent />
         </section>
       </PageContainer>
     </main>

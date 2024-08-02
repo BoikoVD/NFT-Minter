@@ -51,7 +51,7 @@ export const AnimatedBg = () => {
             default: OutMode.out,
           },
           random: false,
-          speed: 1,
+          speed: 0.5,
           straight: false,
         },
         number: {

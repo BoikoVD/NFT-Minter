@@ -7,7 +7,7 @@ interface ITitle {
 
 const styles = {
     small: 'text-lg text-white font-courierPrime font-bold',
-    medium: 'text-3xl text-white font-courierPrime font-bold md:text-5xl',
+    medium: 'text-xl text-white font-courierPrime font-bold md:text-3xl',
     large: 'text-3xl text-white font-courierPrime font-bold md:text-4xl lg:text-5xl lg:leading-normal lg:tracking-wide',
 };
 
