@@ -3,7 +3,7 @@ import { Space_Grotesk, Courier_Prime } from 'next/font/google'
 import { Web3Provider } from "@/context/Web3Context";
 import { ModalManager } from "@/context/ModalManager";
 import ErrorBoundary from "@/HOC/ErrorBoundary";
-import StarfieldBg from "@/components/StarfieldBg/StarfieldBg";
+import { AnimatedBg } from "@/components/AnimatedBg/AnimatedBg";
 import "./globals.css";
  
 const spaceGrotesk = Space_Grotesk({ 
@@ -29,7 +29,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Web3Provider>
           <ModalManager>
             <ErrorBoundary>
-              <StarfieldBg/>
+              <AnimatedBg />
               {children}
             </ErrorBoundary>
           </ModalManager>
