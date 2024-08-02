@@ -7,6 +7,7 @@ import GradientBox from "@/components/UI/GradientBox";
 import CountdownTimer from "@/components/CountdownTimer/CountdownTimer";
 import MainAnimatedImages from "@/components/MainAnimatedImages/MainAnimatedImages";
 import HowItWorksContent from "@/components/HowItWorksContent/HowItWorksContent";
+import Accordion from "@/components/Acordion/Acordion";
 
 export default function Home() {
   return (
@@ -26,13 +27,13 @@ export default function Home() {
             </Button>
             <div className="flex flex-col justify-center gap-8 mt-8 sm:flex-row md:justify-start xl:gap-14 xl:mt-14">
               <p className="text-white text-center">
-                <span className="text-2xl font-bold xl:text-4xl">43 k +</span><br/> NFTs created
+                <span className="text-2xl font-bold xl:text-4xl">43 k +</span><br /> NFTs created
               </p>
               <p className="text-white text-center">
-                <span className="text-2xl font-bold xl:text-4xl">18 k +</span><br/> Pass NFTs minted
+                <span className="text-2xl font-bold xl:text-4xl">18 k +</span><br /> Pass NFTs minted
               </p>
               <p className="text-white text-center">
-                <span className="text-2xl font-bold xl:text-4xl">7 k +</span><br/> Unique wallets
+                <span className="text-2xl font-bold xl:text-4xl">7 k +</span><br /> Unique wallets
               </p>
             </div>
           </div>
@@ -42,7 +43,7 @@ export default function Home() {
               <Text className="mb-2 text-center">
                 Hurry up to mint at a reduced price
               </Text>
-              <CountdownTimer/>
+              <CountdownTimer />
               <Button size='small' className="mt-8">
                 Mint
               </Button>
@@ -54,6 +55,12 @@ export default function Home() {
             HOW IT WORKS
           </Title>
           <HowItWorksContent />
+        </section>
+        <section className="flex flex-col items-center py-10">
+          <Title tag="h2">
+            FAQ
+          </Title>
+          <Accordion />
         </section>
       </PageContainer>
     </main>
