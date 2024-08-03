@@ -4,6 +4,7 @@ import { Web3Provider } from "@/context/Web3Context";
 import { ModalManager } from "@/context/ModalManager";
 import ErrorBoundary from "@/HOC/ErrorBoundary";
 import { AnimatedBg } from "@/components/AnimatedBg/AnimatedBg";
+import Footer from "@/components/Footer/Footer";
 import "./globals.css";
  
 const spaceGrotesk = Space_Grotesk({ 
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <ErrorBoundary>
               <AnimatedBg />
               {children}
+              <Footer/>
             </ErrorBoundary>
           </ModalManager>
         </Web3Provider>

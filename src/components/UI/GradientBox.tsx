@@ -1,5 +1,5 @@
 'use client';
-import { ReactNode, useEffect, useRef, useState, forwardRef } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 interface IGradientBox {
     children: ReactNode,
@@ -9,7 +9,7 @@ interface IGradientBox {
     transparentBorder?: 'left' | 'right' | undefined
 }
 
-export default forwardRef(function GradientBox(props: IGradientBox) {
+export default function GradientBox(props: IGradientBox) {
     const {
         children,
         id,
@@ -78,4 +78,4 @@ export default forwardRef(function GradientBox(props: IGradientBox) {
                     </svg>}
         </div>
     </>);
-});
+};
