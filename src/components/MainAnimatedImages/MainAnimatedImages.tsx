@@ -25,6 +25,10 @@ export default function MainAnimatedImages() {
           alt="The Pass NFT"
           priority
           className="rounded-xl"
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }}
         />
       </motion.div>
       <motion.div
@@ -43,6 +47,10 @@ export default function MainAnimatedImages() {
           alt="The Pass NFT"
           priority
           className="rounded-xl"
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }}
         />
       </motion.div>
       <motion.div
@@ -61,6 +69,10 @@ export default function MainAnimatedImages() {
           alt="The Pass NFT"
           priority
           className="rounded-xl"
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }}
         />
       </motion.div>
       <motion.div
@@ -79,6 +91,10 @@ export default function MainAnimatedImages() {
           alt="The Pass NFT"
           priority
           className="rounded-xl"
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }}
         />
       </motion.div>
       <motion.div
@@ -97,6 +113,10 @@ export default function MainAnimatedImages() {
           alt="The Pass NFT"
           priority
           className="rounded-xl"
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }}
         />
       </motion.div>
     </div>

@@ -28,8 +28,12 @@ export default function Footer() {
               <Image
                 src={LogoImage}
                 alt="logo image"
-                objectFit="cover"
                 fill={false}
+                style={{
+                  maxWidth: "100%",
+                  height: "auto",
+                  objectFit: "cover"
+                }}
               />
             </div>
             <Text className={`${styles.infoText}`}>

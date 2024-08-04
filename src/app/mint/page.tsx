@@ -16,7 +16,14 @@ export default function Mint() {
         <section className="flex min-h-screen w-full flex-auto flex-col items-center justify-center pb-6 pt-[100px] md:pt-[150px]">
           <GradientBox className="flex flex-col items-center gap-10 p-6 md:p-10 lg:flex-row lg:items-start lg:gap-20">
             <div className="max-w-[300px] lg:min-w-[300px] lg:max-w-[500px]">
-              <Image src={PassNFTImage} alt="pass nft" />
+              <Image
+                src={PassNFTImage}
+                alt="pass nft"
+                style={{
+                  maxWidth: "100%",
+                  height: "auto"
+                }}
+              />
             </div>
             <div className="flex flex-col items-center lg:items-start">
               <Title

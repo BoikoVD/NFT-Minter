@@ -35,8 +35,12 @@ export default function Header() {
           <Image
             src={LogoImage}
             alt="logo image"
-            objectFit="cover"
             fill={false}
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+              objectFit: "cover"
+            }}
           />
         </Link>
         <nav
