@@ -10,8 +10,7 @@ const styles = {
     "fixed left-0 top-0 z-[99] w-full py-2 backdrop-blur-md transition-all duration-300",
   headerAfterEl:
     "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-button-gradient",
-  container:
-    "mx-auto flex max-w-[1425px] items-center justify-between px-5 md:px-8",
+  container: "contentContainer flex-row items-center justify-between",
   logo: "relative z-[100] flex w-[120px] flex-col items-center focus:ring-0 focus:ring-offset-0 md:w-[150px]",
   nav: "fixed top-0 z-[99] flex h-screen max-h-screen w-screen flex-col items-center bg-purple py-10 transition-all duration-300 md:static md:mx-3 md:h-auto md:w-auto md:bg-transparent md:py-0",
   navList:
