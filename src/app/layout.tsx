@@ -17,6 +17,9 @@ const courierPrime = Courier_Prime({
 export const metadata: Metadata = {
   title: "NFT Minter",
   description: "Create your own NFT with Minter",
+  icons: [
+    { rel: "icon", type: "image/png", sizes: "48x48", url: "/favicon.ico" },
+  ],
   keywords:
     "NFT, crypto, digital products, AI, artificial intelligence",
   openGraph:
