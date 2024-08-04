@@ -1,4 +1,3 @@
-import Header from "@/components/Header/Header";
 import Button from "@/components/UI/Button";
 import PageContainer from "@/components/UI/PageContainer";
 import Text from "@/components/UI/Text";
@@ -13,7 +12,6 @@ export default function Home() {
   return (
     <main className="relative z-10 font-courierPrime">
       <PageContainer>
-        <Header />
         <section className="flex h-full min-h-screen w-full flex-auto flex-col items-center pb-10 pt-[100px] md:flex-row md:pt-[150px] xl:h-screen">
           <div className="text-center md:flex-[0_0_50%] md:pr-10 md:text-left">
             <Title tag="h1">

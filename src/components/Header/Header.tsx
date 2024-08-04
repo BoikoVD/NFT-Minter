@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <>
       <header
-        className={`fixed left-0 top-0 z-10 w-full px-5 py-2 backdrop-blur-md transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-button-gradient`}
+        className={`fixed left-0 top-0 z-[99] w-full px-5 py-2 backdrop-blur-md transition-all duration-300 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-button-gradient`}
       >
         <div className="mx-auto flex max-w-[1425px] items-center justify-between">
           <div className="relative z-[100] flex w-[120px] flex-col items-center md:w-[150px]">

@@ -9,7 +9,6 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        'spaceGrotesk': ['var(--font-spaceGrotesk)'],
         'courierPrime': ['var(--font-courierPrime)'],
       },
       colors: {

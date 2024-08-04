@@ -1,4 +1,3 @@
-import Header from "@/components/Header/Header";
 import MintPassNFT from "@/components/MintPassNFT/MintPassNFT";
 import PageContainer from "@/components/UI/PageContainer";
 import Image from "next/image";
@@ -14,7 +13,6 @@ export default function Mint() {
   return (
     <main className="relative z-10 font-courierPrime">
       <PageContainer>
-        <Header />
         <section className="flex min-h-screen w-full flex-auto flex-col items-center justify-center pb-6 pt-[100px] md:pt-[150px]">
           <GradientBox className="flex flex-col items-center gap-10 p-6 md:p-10 lg:flex-row lg:items-start lg:gap-20">
             <div className="max-w-[300px] lg:min-w-[300px] lg:max-w-[500px]">
