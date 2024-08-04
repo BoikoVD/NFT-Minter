@@ -11,55 +11,57 @@ import Accordion from "@/components/Acordion/Acordion";
 
 export default function Home() {
   return (
-    <main className="font-courierPrime z-10 relative">
+    <main className="relative z-10 font-courierPrime">
       <PageContainer>
         <Header />
-        <section className="w-full min-h-screen flex-auto flex flex-col items-center pt-[100px] pb-10 h-full md:flex-row md:pt-[150px] xl:h-screen">
-          <div className="text-center md:pr-10 md:text-left md:flex-[0_0_50%]">
+        <section className="flex h-full min-h-screen w-full flex-auto flex-col items-center pb-10 pt-[100px] md:flex-row md:pt-[150px] xl:h-screen">
+          <div className="text-center md:flex-[0_0_50%] md:pr-10 md:text-left">
             <Title tag="h1">
-              UNLEASH YOUR IMAGINATION WITH <span className="whitespace-nowrap">AI-GENERATED</span> NFTS
+              UNLEASH YOUR IMAGINATION WITH{" "}
+              <span className="whitespace-nowrap">AI-GENERATED</span> NFTS
             </Title>
             <Text className="my-10 lg:w-[420px]">
-              Generate unique images with AI, claim them as NFTs, and unlock limitless potential with our <span className="font-bold whitespace-nowrap">exclusive Pass NFT</span>
+              Generate unsique images with AI, claim them as NFTs, and unlock
+              limitless potential with our{" "}
+              <span className="whitespace-nowrap font-bold">
+                exclusive Pass NFT
+              </span>
             </Text>
-            <Button >
-              Explore More
-            </Button>
-            <div className="flex flex-col justify-center gap-8 mt-8 sm:flex-row md:justify-start xl:gap-14 xl:mt-14">
-              <p className="text-white text-center">
-                <span className="text-2xl font-bold xl:text-4xl">43 k +</span><br /> NFTs created
+            <Button>Explore More</Button>
+            <div className="mt-8 flex flex-col justify-center gap-8 sm:flex-row md:justify-start xl:mt-14 xl:gap-14">
+              <p className="text-center text-white">
+                <span className="text-2xl font-bold xl:text-4xl">43 k +</span>
+                <br /> NFTs created
               </p>
-              <p className="text-white text-center">
-                <span className="text-2xl font-bold xl:text-4xl">18 k +</span><br /> Pass NFTs minted
+              <p className="text-center text-white">
+                <span className="text-2xl font-bold xl:text-4xl">18 k +</span>
+                <br /> Pass NFTs minted
               </p>
-              <p className="text-white text-center">
-                <span className="text-2xl font-bold xl:text-4xl">7 k +</span><br /> Unique wallets
+              <p className="text-center text-white">
+                <span className="text-2xl font-bold xl:text-4xl">7 k +</span>
+                <br /> Unique wallets
               </p>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center h-[450px] mt-6 md:mt-0 md:flex-[0_0_50%] md:h-[500px] lg:h-[600px] xl:h-full">
+          <div className="mt-6 flex h-[450px] flex-col items-center justify-center md:mt-0 md:h-[500px] md:flex-[0_0_50%] lg:h-[600px] xl:h-full">
             <MainAnimatedImages />
-            <GradientBox className="flex flex-col p-4 items-center bg-purple">
+            <GradientBox className="flex flex-col items-center bg-purple p-4">
               <Text className="mb-2 text-center">
                 Hurry up to mint at a reduced price
               </Text>
               <CountdownTimer />
-              <Button size='small' className="mt-8">
+              <Button size="small" className="mt-8">
                 Mint
               </Button>
             </GradientBox>
           </div>
         </section>
         <section className="flex flex-col items-center py-10">
-          <Title tag="h2">
-            HOW IT WORKS
-          </Title>
+          <Title tag="h2">HOW IT WORKS</Title>
           <HowItWorksContent />
         </section>
         <section className="flex flex-col items-center py-10">
-          <Title tag="h2">
-            FAQ
-          </Title>
+          <Title tag="h2">FAQ</Title>
           <Accordion />
         </section>
       </PageContainer>

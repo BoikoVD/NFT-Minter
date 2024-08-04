@@ -1,14 +1,18 @@
-'use client'
+"use client";
 import { useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
-import { type ISourceOptions, MoveDirection, OutMode } from "@tsparticles/engine";
+import {
+  type ISourceOptions,
+  MoveDirection,
+  OutMode
+} from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 
 export const AnimatedBg = () => {
   const [init, setInit] = useState(false);
 
   useEffect(() => {
-    initParticlesEngine(async (engine) => {
+    initParticlesEngine(async engine => {
       await loadSlim(engine);
     }).then(() => {
       setInit(true);
@@ -19,69 +23,64 @@ export const AnimatedBg = () => {
     () => ({
       background: {
         color: {
-          value: "transparent",
-        },
+          value: "transparent"
+        }
       },
       fpsLimit: 120,
       interactivity: {
         events: {
           onClick: {
-            enable: false,
+            enable: false
           },
           onHover: {
-            enable: false,
-          },
-        },
+            enable: false
+          }
+        }
       },
       particles: {
         color: {
-          value: "#ffffff",
+          value: "#ffffff"
         },
         links: {
           color: "#ffffff",
           distance: 220,
           enable: true,
           opacity: 0.1,
-          width: 1,
+          width: 1
         },
         move: {
           direction: MoveDirection.none,
           enable: true,
           outModes: {
-            default: OutMode.out,
+            default: OutMode.out
           },
           random: false,
           speed: 0.5,
-          straight: false,
+          straight: false
         },
         number: {
           density: {
-            enable: true,
+            enable: true
           },
-          value: 120,
+          value: 120
         },
         opacity: {
-          value: 0.1,
+          value: 0.1
         },
         shape: {
-          type: "circle",
+          type: "circle"
         },
         size: {
-          value: { min: 1, max: 5 },
-        },
+          value: { min: 1, max: 5 }
+        }
       },
-      detectRetina: true,
+      detectRetina: true
     }),
-    [],
+    []
   );
 
   if (init) {
-    return (
-      <Particles
-        id="tsparticles"
-        options={options}
-      />
-    );
+    return <Particles id="tsparticles" options={options} />;
   }
 
   return <></>;

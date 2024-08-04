@@ -3,15 +3,14 @@ import Header from "@/components/Header/Header";
 import PageContainer from "@/components/UI/PageContainer";
 
 export default function Create() {
-
-    return (
-        <main className="font-courierPrime z-10 relative">
-        <PageContainer>
-            <Header />
-            <section className="w-full min-h-screen flex-auto flex flex-col items-center justify-center pt-[100px] pb-6 md:pt-[150px]">
-                <CreateNftWidget/>
-            </section>
-        </PageContainer>
-        </main>
-    );
+  return (
+    <main className="relative z-10 font-courierPrime">
+      <PageContainer>
+        <Header />
+        <section className="flex min-h-screen w-full flex-auto flex-col items-center justify-center pb-6 pt-[100px] md:pt-[150px]">
+          <CreateNftWidget />
+        </section>
+      </PageContainer>
+    </main>
+  );
 }

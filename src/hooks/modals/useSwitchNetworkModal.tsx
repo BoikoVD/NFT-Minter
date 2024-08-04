@@ -3,18 +3,18 @@ import { useModal } from "@/context/ModalManager";
 import { useWeb3Context } from "@/context/Web3Context";
 
 export const useSwitchNetworkModal = () => {
-    const { switchToCorrectNetwork } = useWeb3Context();
-    const {openModal: open, closeModal: close} = useModal();
+  const { switchToCorrectNetwork } = useWeb3Context();
+  const { openModal: open, closeModal: close } = useModal();
 
-    const openModal = () => {
-        open({
-            content: <Text>Please, switch network to Sepolia Testnet</Text>,
-            modalName: 'switchNetworkModal',
-            type: 'default',
-            actionText: 'Switch',
-            actionHandler: () => switchToCorrectNetwork(close),
-        });
-    }
+  const openModal = () => {
+    open({
+      content: <Text>Please, switch network to Sepolia Testnet</Text>,
+      modalName: "switchNetworkModal",
+      type: "default",
+      actionText: "Switch",
+      actionHandler: () => switchToCorrectNetwork(close)
+    });
+  };
 
-    return { openModal }
-}
+  return { openModal };
+};

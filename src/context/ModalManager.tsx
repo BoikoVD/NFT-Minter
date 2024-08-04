@@ -1,19 +1,19 @@
-"use client"
-import Modal from '@/components/Modal/Modal';
-import { AnimatePresence } from 'framer-motion';
-import React, { useState, ReactNode, useContext } from 'react';
+"use client";
+import Modal from "@/components/Modal/Modal";
+import { AnimatePresence } from "framer-motion";
+import React, { useState, ReactNode, useContext } from "react";
 
 interface IModalData {
-    content: ReactNode,
-    modalName: string,
-    type: 'default' | 'error',
-    actionText?: string,
-    actionHandler?: () => void, 
+  content: ReactNode;
+  modalName: string;
+  type: "default" | "error";
+  actionText?: string;
+  actionHandler?: () => void;
 }
 
 interface IModalContext {
-    openModal: (data: IModalData) => void,
-    closeModal: () => void,
+  openModal: (data: IModalData) => void;
+  closeModal: () => void;
 }
 
 const ModalManagerContext = React.createContext<IModalContext | null>(null);
@@ -32,19 +32,19 @@ export const ModalManager = ({ children }: { children: ReactNode }) => {
   return (
     <ModalManagerContext.Provider value={{ openModal, closeModal }}>
       {children}
-      <AnimatePresence mode='wait'>
+      <AnimatePresence mode="wait">
         {modals.map((modalData, index) => (
-            <Modal 
-                key={modalData.modalName + index} 
-                modalKey={modalData.modalName}
-                isOpen={true} 
-                type={modalData.type}
-                closeHandler={closeModal}
-                actionText={modalData.actionText ?? 'Close' }
-                actionHandler={modalData.actionHandler ?? closeModal}
-            >
+          <Modal
+            key={modalData.modalName + index}
+            modalKey={modalData.modalName}
+            isOpen={true}
+            type={modalData.type}
+            closeHandler={closeModal}
+            actionText={modalData.actionText ?? "Close"}
+            actionHandler={modalData.actionHandler ?? closeModal}
+          >
             {modalData.content}
-            </Modal>
+          </Modal>
         ))}
       </AnimatePresence>
     </ModalManagerContext.Provider>
@@ -52,9 +52,9 @@ export const ModalManager = ({ children }: { children: ReactNode }) => {
 };
 
 export const useModal = (): IModalContext => {
-    const context = useContext(ModalManagerContext);
-    if (!context) {
-      throw new Error('Context is not defined');
-    }
-    return context;
+  const context = useContext(ModalManagerContext);
+  if (!context) {
+    throw new Error("Context is not defined");
+  }
+  return context;
 };
