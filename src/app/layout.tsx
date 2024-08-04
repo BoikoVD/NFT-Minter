@@ -18,27 +18,25 @@ export const metadata: Metadata = {
   title: "NFT Minter",
   description: "Create your own NFT with Minter",
   icons: [
-    { rel: "icon", type: "image/png", sizes: "48x48", url: "/favicon.ico" },
+    { rel: "icon", type: "image/png", sizes: "48x48", url: "/favicon.ico" }
   ],
-  keywords:
-    "NFT, crypto, digital products, AI, artificial intelligence",
-  openGraph:
-    {
-      title: "nftminter.com",
-      description: "Create your own NFT with Minter",
-      url: "https://nftminter.com",
-      siteName: "NFT Minter",
-      type: "website",
-      images: [
-        {
-          url: "https://nftminter.com/nft_minter_media.png",
-          secureUrl: "https://nftminter.com/nft_minter_media.png",
-          width: 800,
-          height: 418,
-          alt: "The NFT Minter social media card image",
-        },
-      ],
-    },
+  keywords: "NFT, crypto, digital products, AI, artificial intelligence",
+  openGraph: {
+    title: "nftminter.com",
+    description: "Create your own NFT with Minter",
+    url: "https://nftminter.com",
+    siteName: "NFT Minter",
+    type: "website",
+    images: [
+      {
+        url: "https://nftminter.com/nft_minter_media.png",
+        secureUrl: "https://nftminter.com/nft_minter_media.png",
+        width: 800,
+        height: 418,
+        alt: "The NFT Minter social media card image"
+      }
+    ]
+  }
 };
 
 export default function RootLayout({
@@ -46,9 +44,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body
-        className={`${courierPrime.variable} bg-layout-gradient`}
-      >
+      <body className={`${courierPrime.variable} bg-layout-gradient`}>
         <Web3Provider>
           <ModalManager>
             <ErrorBoundary>

@@ -1,49 +1,57 @@
 import Image from "next/image";
 import { RiMailFill, RiMapPinFill } from "react-icons/ri";
-import PageContainer from "../UI/PageContainer";
-import Text from "../UI/Text";
-import Button from "../UI/Button";
-import LogoImage from "../../assets/images/logo.webp";
+import PageContainer from "@/components/UI/PageContainer";
+import Text from "@/components/UI/Text";
+import Button from "@/components/UI/Button";
+import LogoImage from "@/assets/images/logo.webp";
+
+const styles = {
+  footer: "bg-footer-bg relative mt-10 w-full pb-10 backdrop-blur-sm",
+  footerBeforeEl:
+    "before:absolute before:top-0 before:left-0 before:h-[2px] before:w-full before:bg-button-gradient",
+  contentWrapper:
+    "flex flex-col items-center pt-6 sm:flex-row sm:justify-between",
+  infoContainer: "flex flex-col items-center sm:items-start",
+  logo: "relative flex w-[150px] flex-col items-center md:w-[180px]",
+  infoText: "mt-4 max-w-[240px] text-center sm:max-w-[300px] sm:text-left",
+  contactsContainer: "mt-6 flex flex-col gap-4 sm:mt-0",
+  contactItem: "flex items-center"
+};
 
 export default function Footer() {
   return (
-    <>
-      <footer
-        className={"bg-footer-bg relative mt-10 w-full pb-10 backdrop-blur-sm"}
-      >
-        <hr className="h-[2px] w-full border-none bg-button-gradient" />
-        <PageContainer>
-          <div className="flex flex-col items-center pt-6 sm:flex-row sm:justify-between">
-            <div className="flex flex-col items-center sm:items-start">
-              <div className="relative z-[100] flex w-[150px] flex-col items-center md:w-[180px]">
-                <Image
-                  src={LogoImage}
-                  alt="logo image"
-                  objectFit="cover"
-                  fill={false}
-                />
-              </div>
-              <Text className="mt-4 max-w-[240px] text-center sm:max-w-[300px] sm:text-left">
-                Get started with the easiest and most secured platform to create
-                digital ART and NFT’s
-              </Text>
-              <Button size="small" className="mt-4">
-                Get Started
-              </Button>
+    <footer className={`${styles.footer} ${styles.footerBeforeEl}`}>
+      <PageContainer>
+        <div className={`${styles.contentWrapper}`}>
+          <div className={`${styles.infoContainer}`}>
+            <div className={`${styles.logo}`}>
+              <Image
+                src={LogoImage}
+                alt="logo image"
+                objectFit="cover"
+                fill={false}
+              />
             </div>
-            <div className="mt-6 flex flex-col gap-4">
-              <div className="flex items-center">
-                <RiMapPinFill size={30} color="#FF00BF" />
-                <Text className="ml-2">40.7128° N, 74.0060° W</Text>
-              </div>
-              <div className="flex items-center">
-                <RiMailFill size={30} color="#FF00BF" />
-                <Text className="ml-2">artbloc@ai.com</Text>
-              </div>
+            <Text className={`${styles.infoText}`}>
+              Get started with the easiest and most secured platform to create
+              digital ART and NFT’s
+            </Text>
+            <Button size="small" className="mt-4">
+              Get Started
+            </Button>
+          </div>
+          <div className={`${styles.contactsContainer}`}>
+            <div className={`${styles.contactItem}`}>
+              <RiMapPinFill size={30} className="fill-pink" />
+              <Text className="ml-2">40.7128° N, 74.0060° W</Text>
+            </div>
+            <div className={`${styles.contactItem}`}>
+              <RiMailFill size={30} className="fill-pink" />
+              <Text className="ml-2">artbloc@ai.com</Text>
             </div>
           </div>
-        </PageContainer>
-      </footer>
-    </>
+        </div>
+      </PageContainer>
+    </footer>
   );
 }
