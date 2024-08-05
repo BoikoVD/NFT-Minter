@@ -114,7 +114,8 @@ export default function StepCards({ data }: IProps) {
           className={styles.numbersBarContainer}
           style={{
             top: barParams[0],
-            height: barParams.length - 1 > 1 ? barParams[barParams.length - 1] : 0
+            height:
+              barParams.length - 1 > 1 ? barParams[barParams.length - 1] : 0
           }}
         >
           {barParams.map((topValue, index) => {
