@@ -6,6 +6,8 @@ import CountdownTimer from "@/components/CountdownTimer/CountdownTimer";
 import MainAnimatedImages from "@/components/MainAnimatedImages/MainAnimatedImages";
 import StepCards from "@/components/StepCards/StepCards";
 import Accordion from "@/components/Acordion/Acordion";
+import ScrollToButton from "@/components/ScrollToButton/ScrollToButton";
+import LinkButton from "@/components/LinkButton/LinkButton";
 
 const howItWorksData = [
   {
@@ -66,6 +68,8 @@ const styles = {
 };
 
 export default function Home() {
+  const hiwSectionId = "how_it_works_section_identifier";
+
   return (
     <main className={styles.main}>
       <section className={`${styles.section} ${styles.homeSection}`}>
@@ -81,7 +85,7 @@ export default function Home() {
               exclusive Pass NFT
             </span>
           </Text>
-          <Button>Explore More</Button>
+          <ScrollToButton elementId={hiwSectionId}>Explore More</ScrollToButton>
           <div className={styles.statInfoContainer}>
             <p>
               <span className={styles.statInfoText}>43 k +</span>
@@ -104,13 +108,13 @@ export default function Home() {
               Hurry up to mint at a reduced price
             </Text>
             <CountdownTimer />
-            <Button size="small" className="mt-8">
+            <LinkButton to="/mint" className="mt-8">
               Mint
-            </Button>
+            </LinkButton>
           </GradientBox>
         </div>
       </section>
-      <section className={`${styles.section}`}>
+      <section className={`${styles.section}`} id={hiwSectionId}>
         <Title tag="h2">HOW IT WORKS</Title>
         <StepCards data={howItWorksData} />
       </section>

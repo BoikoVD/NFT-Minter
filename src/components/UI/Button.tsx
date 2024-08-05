@@ -15,7 +15,7 @@ const styles = {
   // Style type
   rectangle: "rounded-md",
   parallelogram:
-    "[clip-path:polygon(50px_0%,100%_0%,calc(100%-50px)_100%,0%_100%)]",
+    "[clip-path:polygon(40px_0%,100%_0%,calc(100%-40px)_100%,0%_100%)]",
 
   // Sizes
   small: "px-10 py-3 md:px-14",

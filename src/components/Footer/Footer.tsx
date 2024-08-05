@@ -1,11 +1,10 @@
 import Image from "next/image";
 import { RiMailFill, RiMapPinFill } from "react-icons/ri";
 import Text from "@/components/UI/Text";
-import Button from "@/components/UI/Button";
 import LogoImage from "@/assets/images/logo.webp";
 
 const styles = {
-  footer: "bg-footer-bg relative mt-10 w-full pb-10 backdrop-blur-sm",
+  footer: "bg-footer-bg relative mt-10 w-full pb-6 backdrop-blur-sm",
   footerBeforeEl:
     "before:absolute before:top-0 before:left-0 before:h-[2px] before:w-full before:bg-button-gradient",
   contentWrapper:
@@ -34,13 +33,6 @@ export default function Footer() {
               }}
             />
           </div>
-          <Text className={`${styles.infoText}`}>
-            Get started with the easiest and most secured platform to create
-            digital ART and NFT’s
-          </Text>
-          <Button size="small" className="mt-4">
-            Get Started
-          </Button>
         </div>
         <div className={`${styles.contactsContainer}`}>
           <div className={`${styles.contactItem}`}>

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import LinkButton from "@/components/LinkButton/LinkButton";
 import GradientBox from "@/components/UI/GradientBox";
 import Button from "@/components/UI/Button";
 import Title from "@/components/UI/Title";
@@ -93,9 +94,13 @@ export default function StepCards({ data }: IProps) {
               {item.description}
             </Text>
             {item.redirectData && (
-              <Button size="small" className="mt-4">
+              <LinkButton
+                to={item.redirectData.to}
+                className="mt-4"
+                styleType="transparent"
+              >
                 {item.redirectData.text}
-              </Button>
+              </LinkButton>
             )}
             {item.actionCallBack && (
               <Button

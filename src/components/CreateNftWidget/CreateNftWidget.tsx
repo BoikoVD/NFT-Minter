@@ -58,11 +58,11 @@ export default function CreateNftWidget() {
             <>
               <Text className="text-center">
                 Enter your text prompt to generate image, you can also enter a
-                negative prompt that will be a filter for the AI
+                negative prompt that will be a filter for the AI.
               </Text>
-              <Text className="mt-6 text-center">
+              <Text className="mt-2 text-center sm:mt-6">
                 After the AI generate the image you will be able to claim this
-                image as NFT
+                image as NFT.
               </Text>
             </>
           )}
