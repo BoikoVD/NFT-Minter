@@ -4,14 +4,72 @@ import Title from "@/components/UI/Title";
 import GradientBox from "@/components/UI/GradientBox";
 import CountdownTimer from "@/components/CountdownTimer/CountdownTimer";
 import MainAnimatedImages from "@/components/MainAnimatedImages/MainAnimatedImages";
-import HowItWorksContent from "@/components/HowItWorksContent/HowItWorksContent";
+import StepCards from "@/components/StepCards/StepCards";
 import Accordion from "@/components/Acordion/Acordion";
+
+const howItWorksData = [
+  {
+    title: "Get Your Pass NFT",
+    description:
+      "Purchase a Pass NFT to unlock unlimited access to our AI image generator and NFT claiming features.",
+    redirectData: {
+      to: "/mint",
+      text: "Get Pass NFT"
+    }
+  },
+  {
+    title: "Generate Your Image",
+    description:
+      "Use our powerful AI to create unique and stunning images tailored to your vision.",
+    redirectData: {
+      to: "/create",
+      text: "Generate"
+    }
+  },
+  {
+    title: "Claim Your NFT",
+    description:
+      "Secure your creation on the blockchain as an NFT and start trading."
+  }
+];
+
+const faqAcordionData = [
+  {
+    question: "What is a Pass NFT?",
+    answer:
+      "A Pass NFT is your key to unlocking unlimited use of our AI image generation and NFT claiming features."
+  },
+  {
+    question: "How do I generate an image?",
+    answer:
+      "Simply use our intuitive AI tool to create unique images based on your input."
+  },
+  {
+    question: "How do I claim an NFT?",
+    answer:
+      "After generating your image, click 'Claim NFT' to mint it on the blockchain."
+  }
+];
+
+const styles = {
+  main: "contentContainer relative z-10 font-courierPrime",
+  section: "flex flex-col items-center py-10",
+  homeSection:
+    "h-full min-h-screen w-full flex-auto pt-[100px] md:flex-row md:pt-[150px] xl:h-screen",
+  textContainer: "text-center md:flex-[0_0_50%] md:pr-10 md:text-left",
+  imagesContainer:
+    "mt-6 flex h-[450px] flex-col items-center justify-center md:mt-0 md:h-[500px] md:flex-[0_0_50%] lg:h-[600px] xl:h-full",
+  statInfoContainer:
+    "text-center text-white mt-8 flex flex-col justify-center gap-8 sm:flex-row md:justify-start xl:mt-14 xl:gap-14",
+  statInfoText: "text-2xl font-bold xl:text-4xl",
+  advertisingContainer: "flex flex-col items-center bg-purple p-4"
+};
 
 export default function Home() {
   return (
-    <main className="contentContainer relative z-10 font-courierPrime">
-      <section className="flex h-full min-h-screen w-full flex-auto flex-col items-center pb-10 pt-[100px] md:flex-row md:pt-[150px] xl:h-screen">
-        <div className="text-center md:flex-[0_0_50%] md:pr-10 md:text-left">
+    <main className={styles.main}>
+      <section className={`${styles.section} ${styles.homeSection}`}>
+        <div className={styles.textContainer}>
           <Title tag="h1">
             UNLEASH YOUR IMAGINATION WITH{" "}
             <span className="whitespace-nowrap">AI-GENERATED</span> NFTS
@@ -24,24 +82,24 @@ export default function Home() {
             </span>
           </Text>
           <Button>Explore More</Button>
-          <div className="mt-8 flex flex-col justify-center gap-8 sm:flex-row md:justify-start xl:mt-14 xl:gap-14">
-            <p className="text-center text-white">
-              <span className="text-2xl font-bold xl:text-4xl">43 k +</span>
+          <div className={styles.statInfoContainer}>
+            <p>
+              <span className={styles.statInfoText}>43 k +</span>
               <br /> NFTs created
             </p>
-            <p className="text-center text-white">
-              <span className="text-2xl font-bold xl:text-4xl">18 k +</span>
+            <p>
+              <span className={styles.statInfoText}>18 k +</span>
               <br /> Pass NFTs minted
             </p>
-            <p className="text-center text-white">
-              <span className="text-2xl font-bold xl:text-4xl">7 k +</span>
+            <p>
+              <span className={styles.statInfoText}>7 k +</span>
               <br /> Unique wallets
             </p>
           </div>
         </div>
-        <div className="mt-6 flex h-[450px] flex-col items-center justify-center md:mt-0 md:h-[500px] md:flex-[0_0_50%] lg:h-[600px] xl:h-full">
+        <div className={styles.imagesContainer}>
           <MainAnimatedImages />
-          <GradientBox className="flex flex-col items-center bg-purple p-4">
+          <GradientBox className={styles.advertisingContainer}>
             <Text className="mb-2 text-center">
               Hurry up to mint at a reduced price
             </Text>
@@ -52,13 +110,13 @@ export default function Home() {
           </GradientBox>
         </div>
       </section>
-      <section className="flex flex-col items-center py-10">
+      <section className={`${styles.section}`}>
         <Title tag="h2">HOW IT WORKS</Title>
-        <HowItWorksContent />
+        <StepCards data={howItWorksData} />
       </section>
-      <section className="flex flex-col items-center py-10">
+      <section className={`${styles.section}`}>
         <Title tag="h2">FAQ</Title>
-        <Accordion />
+        <Accordion data={faqAcordionData} />
       </section>
     </main>
   );
