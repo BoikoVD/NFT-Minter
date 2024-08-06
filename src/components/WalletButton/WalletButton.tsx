@@ -1,11 +1,11 @@
 "use client";
 import { useWeb3Context } from "@/context/Web3Context";
-import Button from "../UI/Button";
-import AlertIcon from "../../assets/icons/alert_icon.svg";
-import EthIcon from "../../assets/icons/ethereum_logo.svg";
-import Text from "../UI/Text";
 import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
 import { useInstallMetamaskModal } from "@/hooks/modals/useInstallMetamaskModal";
+import Button from "@/components/UI/Button";
+import Text from "@/components/UI/Text";
+import EthIcon from "@/assets/icons/ethereum_logo.svg";
+import AlertIcon from "@/assets/icons/alert_icon.svg";
 
 export default function WalletButton() {
   const { account, isCorrectNetwork, connectWallet, isMetaMaskInstalled } =

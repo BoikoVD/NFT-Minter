@@ -1,7 +1,7 @@
 "use client";
 import { useWeb3Context } from "@/context/Web3Context";
-import Button from "../UI/Button";
-import Text from "../UI/Text";
+import Button from "@/components/UI/Button";
+import Text from "@/components/UI/Text";
 
 export default function MintMinterNFT() {
   const { account, passNFTContract, isOwnerOfPassNFT } = useWeb3Context();

@@ -1,11 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import NFT1Image from "../../assets/images/nft_1.webp";
-import NFT2Image from "../../assets/images/nft_2.webp";
-import NFT3Image from "../../assets/images/nft_3.webp";
-import NFT4Image from "../../assets/images/nft_4.webp";
-import NFT5Image from "../../assets/images/nft_5.webp";
+import NFT1Image from "@/assets/images/nft_1.webp";
+import NFT2Image from "@/assets/images/nft_2.webp";
+import NFT3Image from "@/assets/images/nft_3.webp";
+import NFT4Image from "@/assets/images/nft_4.webp";
+import NFT5Image from "@/assets/images/nft_5.webp";
 
 export default function MainAnimatedImages() {
   return (

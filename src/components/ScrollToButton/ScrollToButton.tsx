@@ -1,5 +1,5 @@
 "use client";
-import Button from "../UI/Button";
+import Button from "@/components/UI/Button";
 
 interface IScrollToButton {
   children: React.ReactNode;

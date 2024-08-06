@@ -3,8 +3,8 @@ import { useWeb3Context } from "@/context/Web3Context";
 import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
 import { useInstallMetamaskModal } from "@/hooks/modals/useInstallMetamaskModal";
 import { useErrorModal } from "@/hooks/modals/useErrorModal";
-import Button from "../UI/Button";
-import Text from "../UI/Text";
+import Button from "@/components/UI/Button";
+import Text from "@/components/UI/Text";
 
 export default function MintPassNFT() {
   const {
