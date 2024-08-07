@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import Text from "@/components/UI/Text";
 import Button from "@/components/UI/Button";
@@ -20,14 +20,10 @@ interface IGenerateImageForm {
   calssName?: string;
 }
 
-interface FormElements extends HTMLFormControlsCollection {
-  prompt: HTMLTextAreaElement;
-  negativePrompt: HTMLTextAreaElement;
-}
-
-interface FormElement extends HTMLFormElement {
-  readonly elements: FormElements;
-}
+type Inputs = {
+  prompt: string;
+  negativePrompt: string;
+};
 
 export default function GenerateImageForm({
   setImageUrl,
@@ -46,9 +42,22 @@ export default function GenerateImageForm({
   const { openModal: openSwitchNetworkmodal } = useSwitchNetworkModal();
   const { openErrorModal } = useErrorModal();
 
-  const submitHandler = async (e: FormEvent<FormElement>) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors }
+  } = useForm<Inputs>();
 
+  const submitHandler: SubmitHandler<Inputs> = async data => {
+    if (!data.prompt.trim()) {
+      setError(
+        "prompt",
+        { message: "Please, enter your prompt" },
+        { shouldFocus: true }
+      );
+      return;
+    }
     if (!isCorrectNetwork) {
       openSwitchNetworkmodal();
       return;
@@ -72,8 +81,8 @@ export default function GenerateImageForm({
     }
 
     const resp = await axios.post("api/generateImage", {
-      prompt: e.currentTarget.prompt.value,
-      negativePrompt: e.currentTarget.negativePrompt.value
+      prompt: data.prompt.trim(),
+      negativePrompt: data.negativePrompt.trim()
     });
 
     console.log("[LimeWire]: Create Image response: ", resp);
@@ -96,19 +105,30 @@ export default function GenerateImageForm({
 
   return (
     <form
-      onSubmit={submitHandler}
+      onSubmit={handleSubmit(submitHandler)}
       className={`flex w-full flex-col items-center ${calssName}`}
     >
       <TextField
-        name="prompt"
         id="prompt_field"
         labelText="Prompt"
-        isRequired={true}
+        {...register("prompt", {
+          required: "Please, enter your prompt",
+          maxLength: {
+            value: 1000,
+            message: "You have exceeded the 1000 character limit"
+          }
+        })}
+        error={errors.prompt?.message}
       />
       <TextField
-        name="negativePrompt"
         id="negative_prompt_field"
         labelText="Negative prompt"
+        {...register("negativePrompt", {
+          maxLength: {
+            value: 1000,
+            message: "You have exceeded the 1000 character limit"
+          }
+        })}
       />
       {account ? (
         <Button type="submit" size="small" className="mt-6">
