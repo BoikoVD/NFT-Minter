@@ -13,6 +13,7 @@ import constants from "@/config/constants";
 
 interface IWeb3Context {
   isMetaMaskInstalled: boolean;
+  web3: Web3 | null;
   account: string | null;
   networkId: string | null;
   isCorrectNetwork: boolean;
@@ -53,6 +54,8 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
     null
   );
 
+  const mode = process.env.NEXT_PUBLIC_MODE;
+
   const clearError = () => {
     setError(null);
   };
@@ -64,9 +67,12 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
       try {
         const web3 = new Web3(window.ethereum);
         setWeb3(web3);
-        await window.ethereum.send("eth_requestAccounts");
-        const accounts = await web3.eth.getAccounts();
+
+        const accounts = await web3.eth.requestAccounts();
+        // console.log("[Web3Context]: rAcs: ", rAcs);
+        // const accounts = await web3.eth.getAccounts();
         setAccount(accounts[0]);
+        console.log("[Web3Context]: Accounts: ", accounts);
         console.log("[Web3Context]: Account connected: ", accounts[0]);
 
         const netId = await web3.eth.getChainId();
@@ -122,18 +128,21 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
   };
 
   const switchToCorrectNetwork = async (callback?: () => void) => {
+    const correctNetwork =
+      mode === "dev"
+        ? constants.LOCAL_NETWORK_ID
+        : constants.SEPOLIA_NETWORK_ID;
+
     if (
       web3 &&
       web3.currentProvider &&
       networkId &&
-      networkId !== constants.SEPOLIA_NETWORK_ID
+      networkId !== correctNetwork
     ) {
       try {
         await web3.currentProvider.request({
           method: "wallet_switchEthereumChain",
-          params: [
-            { chainId: Web3.utils.toHex(BigInt(constants.SEPOLIA_NETWORK_ID)) }
-          ]
+          params: [{ chainId: Web3.utils.toHex(BigInt(correctNetwork)) }]
         });
         if (callback) {
           callback();
@@ -166,31 +175,35 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
   }, [isMetaMaskInstalled]);
 
   useEffect(() => {
-    if (account) {
+    if (account && web3 && web3.provider) {
       const handleAccountsChanged = (accounts: string[]) => {
         console.log("[Web3Context]: Account changed: ", accounts);
         setAccount(accounts[0]);
       };
       const handleNetworkChanged = (networkId: string) => {
-        console.log("[Web3Context]: Network changed: ", networkId);
-        setNetworkId(networkId);
+        console.log(
+          "[Web3Context]: Network changed: ",
+          Number(networkId).toString()
+        );
+        setNetworkId(Number(networkId).toString());
       };
-
-      window.ethereum.on("accountsChanged", handleAccountsChanged);
-      window.ethereum.on("networkChanged", handleNetworkChanged);
+      web3.provider.on("accountsChanged", handleAccountsChanged);
+      web3.provider.on("chainChanged", handleNetworkChanged);
 
       return () => {
-        window.ethereum.removeListener(
-          "accountsChanged",
-          handleAccountsChanged
-        );
-        window.ethereum.removeListener("networkChanged", handleNetworkChanged);
+        web3.provider?.removeListener("accountsChanged", handleAccountsChanged);
+        web3.provider?.removeListener("chainChanged", handleNetworkChanged);
       };
     }
-  }, [account]);
+  }, [account, web3]);
 
   useEffect(() => {
-    if (networkId && networkId === constants.SEPOLIA_NETWORK_ID) {
+    const correctNetwork =
+      mode === "dev"
+        ? constants.LOCAL_NETWORK_ID
+        : constants.SEPOLIA_NETWORK_ID;
+
+    if (networkId && networkId === correctNetwork) {
       setIsCorrectNetwork(true);
       if (account && passNFTContract) {
         checkOwningOfPassNFT(account, passNFTContract);
@@ -204,6 +217,7 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
     <Web3Context.Provider
       value={{
         isMetaMaskInstalled,
+        web3,
         account,
         networkId,
         isCorrectNetwork,

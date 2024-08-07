@@ -7,6 +7,7 @@ interface IButton {
   styleType?: "rectangle" | "parallelogram";
   size?: "small" | "large";
   className?: string;
+  disabled?: boolean;
 }
 
 const styles = {
@@ -29,7 +30,8 @@ export default function Button(props: IButton) {
     type = "button",
     styleType = "rectangle",
     size = "large",
-    className
+    className,
+    disabled = false
   } = props;
 
   return (
@@ -38,6 +40,7 @@ export default function Button(props: IButton) {
         onClick={onClick}
         type={type}
         className={`${styles.main} ${styles[styleType]} ${styles[size]} ${className}`}
+        disabled={disabled}
       >
         {children}
       </button>

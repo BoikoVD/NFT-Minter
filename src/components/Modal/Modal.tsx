@@ -19,7 +19,7 @@ const styles = {
   modal:
     "fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-[rgba(0,0,0,0.4)]",
   contentWrapper:
-    "relative flex flex-col items-center justify-center rounded-xl bg-purple px-10 pb-10 pt-14 text-white",
+    "relative flex flex-col items-center justify-center rounded-xl bg-purple px-10 pb-10 pt-14 text-white max-w-[90%] md:max-w-[50%]",
   beforeElOfContentWrapper:
     "before:w-[calc(100%+4px)] before:h-[calc(100%+4px)] before:absolute before:top-[-2px] before:left-[-2px] before:z-[-1] before:rounded-xl before:bg-border-gradient",
   closeButton: "absolute right-[10px] top-[10px] h-[24px] w-[24px]",
