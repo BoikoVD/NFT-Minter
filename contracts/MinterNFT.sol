@@ -11,7 +11,7 @@ contract MinterNFT is ERC721, Ownable {
     string internal baseTokenUri;
     address payable public withdrawWallet;
 
-    constructor(string _tokenUri) payable ERC721('Minter AI NFT', 'MAI') {
+    constructor(string memory _tokenUri) payable ERC721('Minter AI NFT', 'MAI') {
         mintPrice = 0 ether;
         totalSupply = 0;
         baseTokenUri = _tokenUri;

@@ -14,7 +14,7 @@ contract PassNFT is ERC721, Ownable {
     address payable public withdrawWallet;
     mapping(address => uint256) public walletMints;
 
-    constructor(string _tokenUri) payable ERC721('Minter Pass NFT', 'MP') {
+    constructor(string memory _tokenUri) payable ERC721('Minter Pass NFT', 'MP') {
         mintPrice = 0.01 ether;
         totalSupply = 0;
         maxSupply = 10000;
