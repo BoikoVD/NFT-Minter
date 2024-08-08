@@ -7,9 +7,8 @@ import React, {
   ReactNode
 } from "react";
 import { AbiItem, Contract, Web3 } from "web3";
-import passNFT from "../config/abi/PassNFT.json";
-import minterNFT from "../config/abi/MinterNFT.json";
 import constants from "@/config/constants";
+import abi from "@/config/abi/abi";
 
 interface IWeb3Context {
   isMetaMaskInstalled: boolean;
@@ -80,14 +79,14 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
         console.log("[Web3Context]: Network Id: ", Number(netId).toString());
 
         const passNFTContract = new web3.eth.Contract(
-          passNFT.abi,
-          process.env.NEXT_PUBLIC_PASS_NFT_CONTRACT_ADDRESS
+          abi.passNftAbi,
+          constants.PASS_NFT_CONTRACT_ADDRESS
         );
         setPassNFTContract(passNFTContract);
 
         const minterNFTContract = new web3.eth.Contract(
-          minterNFT.abi,
-          process.env.NEXT_PUBLIC_MINTER_NFT_CONTRACT_ADDRESS
+          abi.minterNftAbi,
+          constants.MINTER_NFT_CONTRACT_ADDRESS
         );
         setMinterNFTContract(minterNFTContract);
       } catch (e: unknown) {
