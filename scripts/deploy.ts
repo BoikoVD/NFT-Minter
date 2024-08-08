@@ -34,6 +34,13 @@ async function deploy() {
     if (process.env.MODE === 'dev') {
       updateClientEnvValue("NEXT_PUBLIC_DEV_PASS_NFT_CONTRACT_ADDRESS", passNFTContractAddress);
       updateClientEnvValue("NEXT_PUBLIC_DEV_MINTER_NFT_CONTRACT_ADDRESS", minterNFTContractAddress);
+
+      passNFTContract.setIsPublicMintEnabled(true)
+        .then(() => {console.log("Public mint enabled for Pass NFT contract")})
+        .catch((e) => {console.log("Public mint was NOT enabled for Pass NFT contract. ERROR: ", e)});
+      minterNFTContract.setIsPublicMintEnabled(true)
+        .then(() => {console.log("Public mint enabled for Minter NFT contract")})
+        .catch((e) => {console.log("Public mint was NOT enabled for Minter NFT contract. ERROR: ", e)});
     } else {
       updateClientEnvValue("NEXT_PUBLIC_PROD_PASS_NFT_CONTRACT_ADDRESS", passNFTContractAddress);
       updateClientEnvValue("NEXT_PUBLIC_PROD_MINTER_NFT_CONTRACT_ADDRESS", minterNFTContractAddress);
