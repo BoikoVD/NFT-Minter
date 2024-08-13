@@ -18,7 +18,7 @@ const styles = {
 
   // Colors
   white: "text-white",
-  red: "text-red-500"
+  red: "text-red"
 };
 
 export default function Text({
