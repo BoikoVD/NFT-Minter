@@ -45,7 +45,9 @@ export default function CreateNftWidget() {
                 <Image
                   src={imageUrl}
                   alt="generated nft"
-                  fill={true}
+                  fill={false}
+                  width={500}
+                  height={500}
                   style={{
                     maxWidth: "100%",
                     height: "auto",

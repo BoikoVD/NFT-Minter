@@ -1,6 +1,5 @@
+import PassNftImage from "@/components/PassNftImage/PassNftImage";
 import MintPassNFT from "@/components/MintPassNFT/MintPassNFT";
-import Image from "next/image";
-import PassNFTImage from "@/assets/images/PassNFT.webp";
 import Title from "@/components/UI/Title";
 import Text from "@/components/UI/Text";
 import GradientBox from "@/components/UI/GradientBox";
@@ -11,7 +10,6 @@ const styles = {
     "flex min-h-screen w-full flex-auto flex-col items-center justify-center pb-6 pt-[100px] md:pt-[150px]",
   contentContainer:
     "flex flex-col items-center gap-10 p-6 md:p-10 lg:flex-row lg:gap-20",
-  imageBox: "max-w-[300px] lg:min-w-[300px] lg:max-w-[500px]",
   textBox: "flex flex-col items-center lg:items-start",
   listItem: "pl-6 relative",
   beforeElementOfListItem:
@@ -23,16 +21,7 @@ export default function Mint() {
     <main className={styles.main}>
       <section className={styles.section}>
         <GradientBox className={styles.contentContainer}>
-          <div className={styles.imageBox}>
-            <Image
-              src={PassNFTImage}
-              alt="pass nft"
-              style={{
-                maxWidth: "100%",
-                height: "auto"
-              }}
-            />
-          </div>
+          <PassNftImage />
           <div className={styles.textBox}>
             <Title tag="h1" size="medium" className="text-center lg:text-left">
               Unlock unlimited creativity and secure your digital art with our
