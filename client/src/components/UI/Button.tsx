@@ -8,10 +8,12 @@ interface IButton {
   size?: "small" | "large";
   className?: string;
   disabled?: boolean;
+  isLoading?: boolean;
 }
 
 const styles = {
   main: "text-lg text-white transition-all duration-500 bg-button-gradient bg-size-200 bg-pos-0 hover:bg-pos-100",
+  disabled: "disabled:opacity-75 disabled:hover:bg-pos-0",
 
   // Style type
   rectangle: "rounded-md",
@@ -31,7 +33,8 @@ export default function Button(props: IButton) {
     styleType = "rectangle",
     size = "large",
     className,
-    disabled = false
+    disabled = false,
+    isLoading = false
   } = props;
 
   return (
@@ -39,10 +42,10 @@ export default function Button(props: IButton) {
       <button
         onClick={onClick}
         type={type}
-        className={`${styles.main} ${styles[styleType]} ${styles[size]} ${className}`}
-        disabled={disabled}
+        className={`${styles.main} ${styles.disabled} ${styles[styleType]} ${styles[size]} ${className}`}
+        disabled={disabled || isLoading}
       >
-        {children}
+        {isLoading ? "..." : children}
       </button>
     </>
   );

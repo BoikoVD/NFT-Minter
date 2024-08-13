@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { useWeb3Context } from "@/context/Web3Context";
 import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
 import { useInstallMetamaskModal } from "@/hooks/modals/useInstallMetamaskModal";
@@ -16,6 +17,7 @@ export default function MintPassNFT() {
     checkOwningOfPassNFT,
     connectWallet
   } = useWeb3Context();
+  const [isMinting, setIsMinting] = useState<boolean>(false);
   const { openInstallMetamaskModal } = useInstallMetamaskModal();
   const { openModal } = useSwitchNetworkModal();
   const { openErrorModal } = useErrorModal();
@@ -27,20 +29,34 @@ export default function MintPassNFT() {
     }
 
     if (account && passNFTContract) {
+      setIsMinting(true);
       try {
         const mintPrice = Number(
           await passNFTContract.methods.mintPrice().call()
         );
-        const res = await passNFTContract.methods.mint(1).send({
-          from: account,
-          value: String(mintPrice)
-        });
+        const res = await passNFTContract.methods
+          .mint(1)
+          .send({
+            from: account,
+            value: String(mintPrice)
+          })
+          .on("confirmation", ({ confirmations, receipt }) => {
+            console.log(
+              "on mintPassNFTContract confirmation: ",
+              confirmations,
+              receipt
+            );
+            if (Number(receipt.status)) {
+              checkOwningOfPassNFT(account, passNFTContract);
+            }
+          });
         console.log("Mint Pass NFT response: ", res);
-        checkOwningOfPassNFT(account, passNFTContract);
       } catch (e: unknown) {
         console.log("Mint Pass NFT ERROR: ", e);
         const error = e as { code?: number; message?: string };
         openErrorModal(error?.message);
+      } finally {
+        setIsMinting(false);
       }
     }
   };
@@ -48,7 +64,9 @@ export default function MintPassNFT() {
   return isOwnerOfPassNFT ? (
     <Text>You have minted the Pass NFT!</Text>
   ) : account ? (
-    <Button onClick={handleMint}>Mint</Button>
+    <Button onClick={handleMint} isLoading={isMinting}>
+      Mint
+    </Button>
   ) : (
     <Button
       onClick={isMetaMaskInstalled ? connectWallet : openInstallMetamaskModal}
