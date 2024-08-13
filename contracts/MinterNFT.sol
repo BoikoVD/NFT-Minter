@@ -15,6 +15,7 @@ contract MinterNFT is ERC721, Ownable {
         mintPrice = 0 ether;
         totalSupply = 0;
         baseTokenUri = _tokenUri;
+        isPublicMintEnabled = false;
     }
 
     function setIsPublicMintEnabled(bool newPublicMintStatus) external onlyOwner {

@@ -20,6 +20,7 @@ contract PassNFT is ERC721, Ownable {
         maxSupply = 10000;
         maxPerWallet = 1;
         baseTokenUri = _tokenUri;
+        isPublicMintEnabled = false;
     }
 
     function setIsPublicMintEnabled(bool newPublicMintStatus) external onlyOwner {
