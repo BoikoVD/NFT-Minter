@@ -68,8 +68,6 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
         setWeb3(web3);
 
         const accounts = await web3.eth.requestAccounts();
-        // console.log("[Web3Context]: rAcs: ", rAcs);
-        // const accounts = await web3.eth.getAccounts();
         setAccount(accounts[0]);
         console.log("[Web3Context]: Accounts: ", accounts);
         console.log("[Web3Context]: Account connected: ", accounts[0]);
@@ -89,14 +87,6 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
           constants.MINTER_NFT_CONTRACT_ADDRESS
         );
         setMinterNFTContract(minterNFTContract);
-        console.log(
-          "[Web3Context]: PassNFTContract isPublicMintEnabled: ",
-          await passNFTContract.methods.isPublicMintEnabled().call()
-        );
-        console.log(
-          "[Web3Context]: MinterNFTContract isPublicMintEnabled: ",
-          await minterNFTContract.methods.isPublicMintEnabled().call()
-        );
       } catch (e: unknown) {
         console.log("[Web3Context]: ConnectWallet ERROR: ", e);
         const error = e as { code?: number; message?: string };
@@ -167,7 +157,7 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (
       typeof window !== "undefined" &&
-      typeof window.ethereum !== "undefined"
+      typeof window?.ethereum !== "undefined"
     ) {
       setIsMetaMaskInstalled(true);
     } else {
@@ -186,9 +176,6 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
       const handleAccountsChanged = (accounts: string[]) => {
         console.log("[Web3Context]: Account changed: ", accounts);
         setAccount(accounts[0]);
-        if (passNFTContract) {
-          checkOwningOfPassNFT(accounts[0], passNFTContract);
-        }
       };
       const handleNetworkChanged = (networkId: string) => {
         console.log(
@@ -205,7 +192,7 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
         web3.provider?.removeListener("chainChanged", handleNetworkChanged);
       };
     }
-  }, [account, web3, passNFTContract]);
+  }, [account, web3]);
 
   useEffect(() => {
     const correctNetwork =
@@ -215,13 +202,16 @@ export const Web3Provider = ({ children }: { children: ReactNode }) => {
 
     if (networkId && networkId === correctNetwork) {
       setIsCorrectNetwork(true);
-      if (account && passNFTContract) {
-        checkOwningOfPassNFT(account, passNFTContract);
-      }
     } else {
       setIsCorrectNetwork(false);
     }
   }, [networkId]);
+
+  useEffect(() => {
+    if (isCorrectNetwork && account && passNFTContract) {
+      checkOwningOfPassNFT(account, passNFTContract);
+    }
+  }, [account, isCorrectNetwork, passNFTContract]);
 
   return (
     <Web3Context.Provider
