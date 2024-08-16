@@ -19,13 +19,6 @@ async function deploy() {
   const minterNFTContractAddress = await minterNFTContract.getAddress();
   console.log("Minter NFT contract deployed to:", minterNFTContractAddress);
 
-  // const enP = await passNFTContract.isPublicMintEnabled();
-  // console.log("Pass NFT contract isPublicMintEnabled:", enP);
-  // const enM = await minterNFTContract.isPublicMintEnabled();
-  // console.log("Minter NFT contract isPublicMintEnabled:", enM);
-  // const psM = await minterNFTContract.passNftAddress();
-  // console.log("Minter NFT contract passNftAddress:", psM);
-
   if (process.env.MODE) {
     fs.copyFile(
       "./artifacts/contracts/PassNFT.sol/PassNFT.json",
