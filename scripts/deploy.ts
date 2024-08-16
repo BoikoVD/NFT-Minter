@@ -9,13 +9,24 @@ async function deploy() {
   const passNFTContractAddress = await passNFTContract.getAddress();
   console.log("Pass NFT contract deployed to:", passNFTContractAddress);
 
-  const { minterNFTContract } = await hre.ignition.deploy(MinterNFTModule);
+  const { minterNFTContract } = await hre.ignition.deploy(MinterNFTModule, {
+    parameters: {
+      [MinterNFTModule.id]: {
+        passNFTContractAddress,
+      },
+    },
+  });
   const minterNFTContractAddress = await minterNFTContract.getAddress();
   console.log("Minter NFT contract deployed to:", minterNFTContractAddress);
 
-  if (process.env.MODE) {
-    console.log("\n");
+  // const enP = await passNFTContract.isPublicMintEnabled();
+  // console.log("Pass NFT contract isPublicMintEnabled:", enP);
+  // const enM = await minterNFTContract.isPublicMintEnabled();
+  // console.log("Minter NFT contract isPublicMintEnabled:", enM);
+  // const psM = await minterNFTContract.passNftAddress();
+  // console.log("Minter NFT contract passNftAddress:", psM);
 
+  if (process.env.MODE) {
     fs.copyFile(
       "./artifacts/contracts/PassNFT.sol/PassNFT.json",
       `./client/src/config/abi/${process.env.MODE}/PassNFT.json`,

@@ -6,7 +6,13 @@ const MinterNFTModule = buildModule("MinterNFTModule", (m) => {
     process.env.BASE_TOKEN_URI
   );
 
-  const minterNFTContract = m.contract("MinterNFT", [baseTokenUri]);
+  const passNftAddress = m.getParameter("passNFTContractAddress");
+
+  const minterNFTContract = m.contract("MinterNFT", [
+    baseTokenUri,
+    ".json?alt=media",
+    passNftAddress,
+  ]);
 
   return { minterNFTContract };
 });
