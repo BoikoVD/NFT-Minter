@@ -44,7 +44,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${courierPrime.variable} bg-layout-gradient`}>
+      <body className={`${courierPrime.className} bg-layout-gradient`}>
         <Web3Provider>
           <ModalManager>
             <ErrorBoundary>

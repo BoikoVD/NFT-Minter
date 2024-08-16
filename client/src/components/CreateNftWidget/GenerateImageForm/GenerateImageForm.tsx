@@ -3,10 +3,10 @@ import axios from "axios";
 import Text from "@/components/UI/Text";
 import Button from "@/components/UI/Button";
 import TextField from "@/components/UI/TextField";
+import ConnectWalletButton from "@/components/ConnectWalletButton/ConnectWalletButton";
 import { useWeb3Context } from "@/context/Web3Context";
 import { useModal } from "@/context/ModalManager";
 import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
-import { useInstallMetamaskModal } from "@/hooks/modals/useInstallMetamaskModal";
 import { useErrorModal } from "@/hooks/modals/useErrorModal";
 
 interface IGenerateImageForm {
@@ -30,15 +30,8 @@ export default function GenerateImageForm({
   setIsLoading,
   calssName
 }: IGenerateImageForm) {
-  const {
-    account,
-    isOwnerOfPassNFT,
-    isCorrectNetwork,
-    isMetaMaskInstalled,
-    connectWallet
-  } = useWeb3Context();
+  const { account, isOwnerOfPassNFT, isCorrectNetwork } = useWeb3Context();
   const { openModal } = useModal();
-  const { openInstallMetamaskModal } = useInstallMetamaskModal();
   const { openModal: openSwitchNetworkmodal } = useSwitchNetworkModal();
   const { openErrorModal } = useErrorModal();
 
@@ -135,16 +128,7 @@ export default function GenerateImageForm({
           Generate
         </Button>
       ) : (
-        <Button
-          onClick={
-            isMetaMaskInstalled ? connectWallet : openInstallMetamaskModal
-          }
-          type="button"
-          size="small"
-          className="mt-6"
-        >
-          Connect Wallet
-        </Button>
+        <ConnectWalletButton className="mt-6" />
       )}
     </form>
   );

@@ -2,7 +2,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import WalletButton from "@/components/WalletButton/WalletButton";
+import ConnectWalletButton from "@/components/ConnectWalletButton/ConnectWalletButton";
+import NetworkButton from "@/components/NetworkButton/NetworkButton";
 import LogoImage from "@/assets/images/logo.webp";
 
 const styles = {
@@ -15,8 +16,8 @@ const styles = {
   nav: "fixed top-0 z-[99] flex h-screen max-h-screen w-screen flex-col items-center bg-purple py-10 transition-all duration-300 md:static md:mx-3 md:h-auto md:w-auto md:bg-transparent md:py-0",
   navList:
     "my-10 flex w-full flex-[1_1_auto] flex-col items-center justify-center gap-10 overflow-auto text-white md:my-0 md:flex-row",
-  walletBtnWrapperMobile: "flex md:hidden",
-  walletBtnWrapperDesktop: "hidden md:flex",
+  walletBtnWrapperMobile: "flex flex-col items-center gap-4 md:hidden",
+  walletBtnWrapperDesktop: "hidden md:flex gap-6",
   burgerBtn:
     "relative z-[99] flex h-[24px] w-[34px] outline-offset-2 md:hidden",
   burgerSpanEl:
@@ -57,11 +58,13 @@ export default function Header() {
             </li>
           </ul>
           <div className={`${styles.walletBtnWrapperMobile}`}>
-            <WalletButton />
+            <NetworkButton />
+            <ConnectWalletButton />
           </div>
         </nav>
         <div className={`${styles.walletBtnWrapperDesktop}`}>
-          <WalletButton />
+          <NetworkButton />
+          <ConnectWalletButton />
         </div>
         <button
           className={`${styles.burgerBtn}`}

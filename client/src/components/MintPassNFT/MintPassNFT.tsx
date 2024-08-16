@@ -2,23 +2,20 @@
 import { useState } from "react";
 import { useWeb3Context } from "@/context/Web3Context";
 import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
-import { useInstallMetamaskModal } from "@/hooks/modals/useInstallMetamaskModal";
 import { useErrorModal } from "@/hooks/modals/useErrorModal";
+import ConnectWalletButton from "@/components/ConnectWalletButton/ConnectWalletButton";
 import Button from "@/components/UI/Button";
 import Text from "@/components/UI/Text";
 
 export default function MintPassNFT() {
   const {
-    isMetaMaskInstalled,
     account,
     passNFTContract,
     isOwnerOfPassNFT,
     isCorrectNetwork,
-    checkOwningOfPassNFT,
-    connectWallet
+    checkOwningOfPassNFT
   } = useWeb3Context();
   const [isMinting, setIsMinting] = useState<boolean>(false);
-  const { openInstallMetamaskModal } = useInstallMetamaskModal();
   const { openModal } = useSwitchNetworkModal();
   const { openErrorModal } = useErrorModal();
 
@@ -68,10 +65,6 @@ export default function MintPassNFT() {
       Mint
     </Button>
   ) : (
-    <Button
-      onClick={isMetaMaskInstalled ? connectWallet : openInstallMetamaskModal}
-    >
-      Connect Wallet
-    </Button>
+    <ConnectWalletButton />
   );
 }
