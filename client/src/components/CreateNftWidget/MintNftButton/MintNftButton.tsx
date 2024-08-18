@@ -1,9 +1,9 @@
 "use client";
 import axios from "axios";
 import { useWeb3Context } from "@/context/Web3Context";
-import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
-import { useErrorModal } from "@/hooks/modals/useErrorModal";
+import { useModal } from "@/context/ModalManager";
 import Button from "@/components/UI/Button";
+import Text from "@/components/UI/Text";
 
 interface IMintNftButton {
   imageUrl: string | null;
@@ -19,9 +19,13 @@ export default function MintNftButton({
   imageUrl,
   setIsLoading
 }: IMintNftButton) {
-  const { account, minterNFTContract, isCorrectNetwork } = useWeb3Context();
-  const { openModal } = useSwitchNetworkModal();
-  const { openErrorModal } = useErrorModal();
+  const {
+    account,
+    minterNFTContract,
+    isCorrectNetwork,
+    switchToCorrectNetwork
+  } = useWeb3Context();
+  const { openModal, closeModal } = useModal();
 
   const getFileName = async () => {
     try {
@@ -35,17 +39,31 @@ export default function MintNftButton({
     } catch (e) {
       console.log("Get file name ERROR: ", e);
       const error = e as { code?: number; message?: string };
-      openErrorModal(error?.message ?? "Something went wrong...");
+      openModal({
+        content: <Text>{error?.message ?? "Something went wrong..."}</Text>,
+        modalName: "errorModal",
+        type: "error"
+      });
     }
   };
 
   const mintHandler = async () => {
     if (imageUrl === null || account === null || minterNFTContract === null) {
-      openErrorModal();
+      openModal({
+        content: <Text>Something went wrong...</Text>,
+        modalName: "errorModal",
+        type: "error"
+      });
       return;
     }
     if (!isCorrectNetwork) {
-      openModal();
+      openModal({
+        content: <Text>Please, switch network to Sepolia Testnet</Text>,
+        modalName: "switchNetworkModal",
+        type: "default",
+        actionText: "Switch",
+        actionHandler: () => switchToCorrectNetwork(closeModal)
+      });
       return;
     }
 
@@ -85,7 +103,11 @@ export default function MintNftButton({
       } catch (e) {
         console.log("Mint NFT ERROR: ", e);
         const error = e as { code?: number; message?: string };
-        openErrorModal(error?.message ?? "Something went wrong...");
+        openModal({
+          content: <Text>{error?.message ?? "Something went wrong..."}</Text>,
+          modalName: "errorModal",
+          type: "error"
+        });
 
         const removeImageDataResponse = await axios.post(
           "api/removeImageData",

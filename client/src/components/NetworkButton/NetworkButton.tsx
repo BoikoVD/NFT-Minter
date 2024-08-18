@@ -1,16 +1,23 @@
 "use client";
-import { useWeb3Context } from "@/context/Web3Context";
-import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
 import { IoIosWarning } from "react-icons/io";
 import { FaEthereum } from "react-icons/fa";
+import { useWeb3Context } from "@/context/Web3Context";
+import { useModal } from "@/context/ModalManager";
 import Text from "@/components/UI/Text";
 
 export default function NetworkButton({ className }: { className?: string }) {
-  const { account, isCorrectNetwork } = useWeb3Context();
-  const { openModal } = useSwitchNetworkModal();
+  const { account, isCorrectNetwork, switchToCorrectNetwork } =
+    useWeb3Context();
+  const { openModal, closeModal } = useModal();
 
   const switchNetworkHandler = () => {
-    openModal();
+    openModal({
+      content: <Text>Please, switch network to Sepolia Testnet</Text>,
+      modalName: "switchNetworkModal",
+      type: "default",
+      actionText: "Switch",
+      actionHandler: () => switchToCorrectNetwork(closeModal)
+    });
   };
 
   if (!account) {

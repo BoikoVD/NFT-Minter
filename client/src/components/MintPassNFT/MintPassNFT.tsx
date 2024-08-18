@@ -1,11 +1,10 @@
 "use client";
 import { useState } from "react";
 import { useWeb3Context } from "@/context/Web3Context";
-import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
-import { useErrorModal } from "@/hooks/modals/useErrorModal";
 import ConnectWalletButton from "@/components/ConnectWalletButton/ConnectWalletButton";
 import Button from "@/components/UI/Button";
 import Text from "@/components/UI/Text";
+import { useModal } from "@/context/ModalManager";
 
 export default function MintPassNFT() {
   const {
@@ -13,15 +12,21 @@ export default function MintPassNFT() {
     passNFTContract,
     isOwnerOfPassNFT,
     isCorrectNetwork,
-    checkOwningOfPassNFT
+    checkOwningOfPassNFT,
+    switchToCorrectNetwork
   } = useWeb3Context();
   const [isMinting, setIsMinting] = useState<boolean>(false);
-  const { openModal } = useSwitchNetworkModal();
-  const { openErrorModal } = useErrorModal();
+  const { openModal, closeModal } = useModal();
 
   const handleMint = async () => {
     if (!isCorrectNetwork) {
-      openModal();
+      openModal({
+        content: <Text>Please, switch network to Sepolia Testnet</Text>,
+        modalName: "switchNetworkModal",
+        type: "default",
+        actionText: "Switch",
+        actionHandler: () => switchToCorrectNetwork(closeModal)
+      });
       return;
     }
 
@@ -51,7 +56,11 @@ export default function MintPassNFT() {
       } catch (e: unknown) {
         console.log("Mint Pass NFT ERROR: ", e);
         const error = e as { code?: number; message?: string };
-        openErrorModal(error?.message);
+        openModal({
+          content: <Text>{error?.message ?? "Something went wrong..."}</Text>,
+          modalName: "errorModal",
+          type: "error"
+        });
       } finally {
         setIsMinting(false);
       }

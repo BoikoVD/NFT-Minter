@@ -1,7 +1,9 @@
 "use client";
 import { useWeb3Context } from "@/context/Web3Context";
-import { useInstallMetamaskModal } from "@/hooks/modals/useInstallMetamaskModal";
+import { useModal } from "@/context/ModalManager";
+import MetamaskIcon from "@/assets/icons/metamask_icon.svg";
 import Button from "@/components/UI/Button";
+import Text from "@/components/UI/Text";
 
 export default function ConnectWalletButton({
   className
@@ -9,7 +11,21 @@ export default function ConnectWalletButton({
   className?: string;
 }) {
   const { account, connectWallet, isMetaMaskInstalled } = useWeb3Context();
-  const { openInstallMetamaskModal } = useInstallMetamaskModal();
+  const { openModal } = useModal();
+
+  const openInstallMetamaskModal = () => {
+    openModal({
+      content: (
+        <>
+          <MetamaskIcon style={{ width: "120px", height: "120px" }} />
+          <Text>Please, install MetaMask wallet!</Text>
+        </>
+      ),
+      modalName: "installMetamaskModal",
+      type: "default",
+      actionText: "OK"
+    });
+  };
 
   return account ? (
     <Button size="small" className={className}>

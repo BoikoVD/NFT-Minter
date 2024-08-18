@@ -6,8 +6,6 @@ import TextField from "@/components/UI/TextField";
 import ConnectWalletButton from "@/components/ConnectWalletButton/ConnectWalletButton";
 import { useWeb3Context } from "@/context/Web3Context";
 import { useModal } from "@/context/ModalManager";
-import { useSwitchNetworkModal } from "@/hooks/modals/useSwitchNetworkModal";
-import { useErrorModal } from "@/hooks/modals/useErrorModal";
 
 interface IGenerateImageForm {
   setImageUrl: React.Dispatch<React.SetStateAction<string | null>>;
@@ -30,10 +28,13 @@ export default function GenerateImageForm({
   setIsLoading,
   calssName
 }: IGenerateImageForm) {
-  const { account, isOwnerOfPassNFT, isCorrectNetwork } = useWeb3Context();
-  const { openModal } = useModal();
-  const { openModal: openSwitchNetworkmodal } = useSwitchNetworkModal();
-  const { openErrorModal } = useErrorModal();
+  const {
+    account,
+    isOwnerOfPassNFT,
+    isCorrectNetwork,
+    switchToCorrectNetwork
+  } = useWeb3Context();
+  const { openModal, closeModal } = useModal();
 
   const {
     register,
@@ -52,7 +53,13 @@ export default function GenerateImageForm({
       return;
     }
     if (!isCorrectNetwork) {
-      openSwitchNetworkmodal();
+      openModal({
+        content: <Text>Please, switch network to Sepolia Testnet</Text>,
+        modalName: "switchNetworkModal",
+        type: "default",
+        actionText: "Switch",
+        actionHandler: () => switchToCorrectNetwork(closeModal)
+      });
       return;
     }
     if (!isOwnerOfPassNFT) {
@@ -84,10 +91,18 @@ export default function GenerateImageForm({
       if (resp?.data?.apiResponse?.data[0]?.asset_url) {
         setImageUrl(resp.data.apiResponse.data[0].asset_url);
       } else {
-        openErrorModal("Something went wrong...");
+        openModal({
+          content: <Text>Something went wrong...</Text>,
+          modalName: "errorModal",
+          type: "error"
+        });
       }
     } else {
-      openErrorModal(resp.data.message);
+      openModal({
+        content: <Text>{resp.data?.message ?? "Something went wrong..."}</Text>,
+        modalName: "errorModal",
+        type: "error"
+      });
     }
 
     setIsLoading({
