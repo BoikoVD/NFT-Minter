@@ -1,10 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import GradientBox from "@/components/UI/GradientBox";
 
 const styles = {
   wrapper: "flex gap-2 text-white",
-  countItem: "flex w-[60px] items-center justify-center p-2"
+  countItem: "flex w-[60px] items-center justify-center p-2 borderGradient"
 };
 
 const CountdownTimer = () => {
@@ -32,9 +31,9 @@ const CountdownTimer = () => {
 
   return (
     <div className={styles.wrapper}>
-      <GradientBox className={styles.countItem}>{`${hours}h`}</GradientBox>
-      <GradientBox className={styles.countItem}>{`${minutes}m`}</GradientBox>
-      <GradientBox className={styles.countItem}>{`${seconds}s`}</GradientBox>
+      <div className={styles.countItem}>{`${hours}h`}</div>
+      <div className={styles.countItem}>{`${minutes}m`}</div>
+      <div className={styles.countItem}>{`${seconds}s`}</div>
     </div>
   );
 };

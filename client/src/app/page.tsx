@@ -1,7 +1,5 @@
-import Button from "@/components/UI/Button";
 import Text from "@/components/UI/Text";
 import Title from "@/components/UI/Title";
-import GradientBox from "@/components/UI/GradientBox";
 import CountdownTimer from "@/components/CountdownTimer/CountdownTimer";
 import MainAnimatedImages from "@/components/MainAnimatedImages/MainAnimatedImages";
 import StepCards from "@/components/StepCards/StepCards";
@@ -64,7 +62,8 @@ const styles = {
   statInfoContainer:
     "text-center text-white mt-8 flex flex-col justify-center gap-8 sm:flex-row md:justify-start xl:mt-14 xl:gap-14",
   statInfoText: "text-2xl font-bold xl:text-4xl",
-  advertisingContainer: "flex flex-col items-center bg-purple p-4"
+  advertisingContainer:
+    "flex flex-col items-center bg-purple p-4 borderGradient"
 };
 
 export default function Home() {
@@ -103,7 +102,7 @@ export default function Home() {
         </div>
         <div className={styles.imagesContainer}>
           <MainAnimatedImages />
-          <GradientBox className={styles.advertisingContainer}>
+          <div className={styles.advertisingContainer}>
             <Text className="mb-2 text-center">
               Hurry up to mint at a reduced price
             </Text>
@@ -111,7 +110,7 @@ export default function Home() {
             <LinkButton to="/mint" className="mt-8">
               Mint
             </LinkButton>
-          </GradientBox>
+          </div>
         </div>
       </section>
       <section className={`${styles.section}`} id={hiwSectionId}>

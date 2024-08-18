@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import LinkButton from "@/components/LinkButton/LinkButton";
-import GradientBox from "@/components/UI/GradientBox";
 import Button from "@/components/UI/Button";
 import Title from "@/components/UI/Title";
 import Text from "@/components/UI/Text";
@@ -24,13 +23,13 @@ interface IProps {
 
 const styles = {
   container: "relative mt-10 flex w-full flex-col gap-4 sm:gap-6 md:gap-0",
-  gradientBox: "flex flex-col items-center p-6",
+  gradientBox: "flex flex-col items-center p-6 borderGradient md:w-[45%]",
   numberElementInGradientBox:
     "mb-4 flex h-[30px] w-[30px] items-center justify-center rounded-full bg-pink text-purple md:hidden",
   numbersBarContainer:
     "absolute left-[50%] top-[50%] hidden w-[2px] translate-x-[-50%] bg-pink md:block",
   numberElementInBar:
-    "absolute left-[50%] flex h-[30px] w-[30px] translate-x-[-50%] items-center justify-center rounded-full border border-[2px] border-pink bg-pink font-bold text-purple"
+    "absolute left-[50%] flex h-[30px] w-[30px] translate-x-[-50%] items-center justify-center rounded-full border border-[2px] border-pink bg-pink font-bold text-white"
 };
 
 export default function StepCards({ data }: IProps) {
@@ -65,16 +64,15 @@ export default function StepCards({ data }: IProps) {
   return (
     <div className={styles.container}>
       {data.map((item, index) => {
-        const isTransparent = width && width >= 768;
         const isOdd = (index + 1) % 2 === 1;
         const isFirstOrLast = index === 0 || index === data.length - 1;
         return (
-          <GradientBox
-            wrapperClassName={`md:w-[45%] ${isOdd ? "md:self-start" : "md:self-end"} ${!isFirstOrLast ? "md:my-[-20px]" : ""}`}
-            className={`${styles.gradientBox} ${isOdd ? "md:items-end" : "md:items-start"}`}
-            transparentBorder={
-              isTransparent ? (isOdd ? "left" : "right") : undefined
-            }
+          <div
+            className={`${styles.gradientBox} ${!isFirstOrLast ? "md:my-[-20px]" : ""} ${
+              isOdd
+                ? "md:borderGradientColor-transparentLeft md:items-end md:self-start"
+                : "md:borderGradientColor-transparentRight md:items-start md:self-end"
+            }`}
             id={idPrefix + (index + 1)}
             key={idPrefix + (index + 1)}
           >
@@ -111,7 +109,7 @@ export default function StepCards({ data }: IProps) {
                 {item.actionCallBack.text}
               </Button>
             )}
-          </GradientBox>
+          </div>
         );
       })}
       {barParams.length > 0 && (

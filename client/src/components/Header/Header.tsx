@@ -12,14 +12,13 @@ const styles = {
   headerAfterEl:
     "after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-button-gradient",
   container: "contentContainer flex-row items-center justify-between",
-  logo: "relative z-[100] flex w-[120px] flex-col items-center focus:ring-0 focus:ring-offset-0 md:w-[150px]",
+  logo: "relative z-[100] flex w-[120px] flex-col items-center md:w-[150px]",
   nav: "fixed top-0 z-[99] flex h-screen max-h-screen w-screen flex-col items-center bg-purple py-10 transition-all duration-300 md:static md:mx-3 md:h-auto md:w-auto md:bg-transparent md:py-0",
   navList:
-    "my-10 flex w-full flex-[1_1_auto] flex-col items-center justify-center gap-10 overflow-auto text-white md:my-0 md:flex-row",
+    "my-10 mx-1 flex w-full flex-[1_1_auto] flex-col items-center justify-center gap-10 overflow-auto text-white md:my-0 md:flex-row",
   walletBtnWrapperMobile: "flex flex-col items-center gap-4 md:hidden",
   walletBtnWrapperDesktop: "hidden md:flex gap-6",
-  burgerBtn:
-    "relative z-[99] flex h-[24px] w-[34px] outline-offset-2 md:hidden",
+  burgerBtn: "relative z-[99] flex h-[24px] w-[34px] md:hidden",
   burgerSpanEl:
     "absolute left-0 h-[2px] w-full bg-white transition-all duration-300",
   burgerSpanElMiddle: "top-[50%] translate-y-[-50%]"
@@ -31,7 +30,7 @@ export default function Header() {
   return (
     <header className={`${styles.header} ${styles.headerAfterEl}`}>
       <div className={`${styles.container}`}>
-        <Link href={"/"} className={`${styles.logo}`}>
+        <Link href={"/"} className={`${styles.logo}`} tabIndex={1}>
           <Image
             src={LogoImage}
             alt="logo image"
@@ -44,7 +43,7 @@ export default function Header() {
           />
         </Link>
         <nav
-          className={`${styles.nav} ${isMenuOpen ? "left-0" : "left-[100%]"}`}
+          className={`${styles.nav} ${isMenuOpen ? "pointer-events-auto visible left-0" : "pointer-events-none invisible left-[100%] md:pointer-events-auto md:visible md:left-0"}`}
         >
           <ul className={`${styles.navList}`}>
             <li>
@@ -69,6 +68,7 @@ export default function Header() {
         <button
           className={`${styles.burgerBtn}`}
           onClick={() => setIsMenuOpen(prev => !prev)}
+          tabIndex={1}
         >
           <span
             className={`${styles.burgerSpanEl} ${isMenuOpen ? "top-[11px] rotate-[45deg]" : "top-0"}`}

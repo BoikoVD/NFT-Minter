@@ -2,14 +2,13 @@ import PassNftImage from "@/components/PassNftImage/PassNftImage";
 import MintPassNFT from "@/components/MintPassNFT/MintPassNFT";
 import Title from "@/components/UI/Title";
 import Text from "@/components/UI/Text";
-import GradientBox from "@/components/UI/GradientBox";
 
 const styles = {
   main: "contentContainer relative z-10 font-courierPrime",
   section:
     "flex min-h-screen w-full flex-auto flex-col items-center justify-center pb-6 pt-[100px] md:pt-[150px]",
   contentContainer:
-    "flex flex-col items-center gap-10 p-6 md:p-10 lg:flex-row lg:gap-20",
+    "flex flex-col items-center gap-10 p-6 borderGradient md:p-10 lg:flex-row lg:gap-20",
   textBox: "flex flex-col items-center lg:items-start",
   listItem: "pl-6 relative",
   beforeElementOfListItem:
@@ -20,7 +19,7 @@ export default function Mint() {
   return (
     <main className={styles.main}>
       <section className={styles.section}>
-        <GradientBox className={styles.contentContainer}>
+        <div className={styles.contentContainer}>
           <PassNftImage />
           <div className={styles.textBox}>
             <Title tag="h1" size="medium" className="text-center lg:text-left">
@@ -55,7 +54,7 @@ export default function Mint() {
             </ul>
             <MintPassNFT />
           </div>
-        </GradientBox>
+        </div>
       </section>
     </main>
   );

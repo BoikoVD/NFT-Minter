@@ -1,16 +1,14 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import GradientBox from "@/components/UI/GradientBox";
 import Loading from "@/components/Loading/Loading";
 import Text from "@/components/UI/Text";
 import GenerateImageForm from "./GenerateImageForm/GenerateImageForm";
 import MintNftButton from "./MintNftButton/MintNftButton";
 
 const styles = {
-  wrapper: "w-full md:max-w-[1000px]",
   contentContainer:
-    "flex w-full flex-col items-center gap-10 rounded-xl p-5 md:flex-row lg:gap-20 lg:p-10",
+    "flex w-full flex-col items-center gap-10 rounded-xl p-5 borderGradient md:max-w-[1000px] md:flex-row lg:gap-20 lg:p-10",
   mintBox: "flex flex-col items-center justify-between",
   imageGeneratingArea:
     "flex h-[230px] w-[230px] flex-col justify-center overflow-hidden rounded-xl bg-[rgba(0,0,0,0.2)] p-4 sm:h-[300px] sm:w-[300px] md:h-[350px] md:w-[350px] lg:h-[400px] lg:w-[400px] lg:p-8",
@@ -29,10 +27,7 @@ export default function CreateNftWidget() {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   return (
-    <GradientBox
-      wrapperClassName={styles.wrapper}
-      className={styles.contentContainer}
-    >
+    <div className={styles.contentContainer}>
       <div className={styles.mintBox}>
         <div className={styles.imageGeneratingArea}>
           {isLoading.state ? (
@@ -79,6 +74,6 @@ export default function CreateNftWidget() {
         setImageUrl={setImageUrl}
         setIsLoading={setIsLoading}
       />
-    </GradientBox>
+    </div>
   );
 }

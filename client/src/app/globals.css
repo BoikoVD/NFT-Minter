@@ -3,7 +3,29 @@
 @tailwind utilities;
 
 @layer components {
-    .contentContainer {
-        @apply mx-auto max-w-[1425px] flex flex-col px-5 md:px-8;
-    }
+  .contentContainer {
+    @apply mx-auto flex max-w-[1425px] flex-col px-5 md:px-8;
+  }
+  .borderGradient {
+    @apply relative rounded-xl;
+  }
+  .borderGradient > * {
+    @apply z-[1];
+  }
+  .borderGradient::before {
+    @apply absolute z-[0] rounded-xl border-2 border-transparent bg-border-gradient bg-origin-border;
+    content: "";
+    inset: 0;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  .borderGradientColor-transparentLeft::before {
+    @apply bg-border-gradient-tr-l;
+  }
+  .borderGradientColor-transparentRight::before {
+    @apply bg-border-gradient-tr-r;
+  }
 }

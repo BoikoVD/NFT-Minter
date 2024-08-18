@@ -23,7 +23,9 @@ const config: Config = {
       backgroundImage: ({ theme }) => ({
         "layout-gradient": `linear-gradient(${theme("colors.purple")}, ${theme("colors.pink-dark")})`,
         "button-gradient": `linear-gradient(0.25turn, ${theme("colors.pink")}, ${theme("colors.blue")}, ${theme("colors.pink")})`,
-        "border-gradient": `linear-gradient(${theme("colors.blue")}, ${theme("colors.pink")})`
+        "border-gradient": `linear-gradient(${theme("colors.blue")}, ${theme("colors.pink")})`,
+        "border-gradient-tr-l": `linear-gradient(0.25turn, transparent 50%, ${theme("colors.pink")})`,
+        "border-gradient-tr-r": `linear-gradient(0.25turn, ${theme("colors.pink")}, transparent 50%)`
       }),
       backgroundSize: {
         "size-200": "200% 200%"

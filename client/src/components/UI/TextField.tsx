@@ -22,7 +22,7 @@ export default forwardRef<HTMLTextAreaElement, ITextField>(
             {labelText}
           </label>
         )}
-        <div className="w-full rounded bg-border-gradient p-[1px]">
+        <div className="w-full rounded bg-border-gradient p-[2px] md:p-[1px]">
           <textarea
             id={id}
             name={name}
