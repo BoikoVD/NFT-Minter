@@ -9,7 +9,7 @@ describe("Pass NFT contract", function () {
 
     const [owner, otherAccount] = await hre.ethers.getSigners();
 
-    const passNft = await hre.ethers.getContractFactory("PassNFT");
+    const passNft = await hre.ethers.getContractFactory("TestPassNFT");
     const passNftContract = await passNft.deploy(baseTokenUri, tokenFileName);
 
     return {
@@ -22,8 +22,6 @@ describe("Pass NFT contract", function () {
   }
 
   describe("Deployment", function () {
-    // TODO: How to test internal properties?
-
     it("Should set the right owner", async function () {
       const { passNftContract, owner } = await loadFixture(deployFixture);
 
@@ -31,7 +29,8 @@ describe("Pass NFT contract", function () {
     });
 
     it("Should set the correct properties", async function () {
-      const { passNftContract, owner } = await loadFixture(deployFixture);
+      const { passNftContract, owner, baseTokenUri, tokenFileName } =
+        await loadFixture(deployFixture);
 
       expect(await passNftContract.mintPrice()).to.equal(
         hre.ethers.parseUnits("0.01", "ether")
@@ -40,6 +39,10 @@ describe("Pass NFT contract", function () {
       expect(await passNftContract.maxSupply()).to.equal(10000);
       expect(await passNftContract.maxPerWallet()).to.equal(1);
       expect(await passNftContract.withdrawWallet()).to.equal(owner);
+      expect(await passNftContract.getBaseTokenUri()).to.equal(baseTokenUri);
+      expect(await passNftContract.getTokenMetadataFilename()).to.equal(
+        tokenFileName
+      );
     });
 
     it("Should fail if the baseTokenUri is an empty string", async function () {
@@ -103,7 +106,7 @@ describe("Pass NFT contract", function () {
       });
     });
 
-    //TODO: How to test internal properties?
+    //TODO: Test setBaseTokenUri and setTokenMetadataFilename functions
   });
 
   describe("Transactions", function () {
