@@ -15,8 +15,13 @@ contract MinterNFT is ERC721, Ownable {
     address payable public withdrawWallet;
 
     constructor(string memory _tokenUri, string memory _extension, address _passNftAddress) payable ERC721('Minter AI NFT', 'MAI') {
+        bytes memory tempTokenUri = bytes(_tokenUri);
+        require(tempTokenUri.length > 0, "baseTokenUri should not be empty");
+        bytes memory tempExtension = bytes(_extension);
+        require(tempExtension.length > 0, "tokenExtensionName should not be empty");
         mintPrice = 0 ether;
         totalSupply = 0;
+        withdrawWallet = payable(msg.sender);
         baseTokenUri = _tokenUri;
         tokenExtensionName = _extension;
         passNftAddress = _passNftAddress;
@@ -49,7 +54,7 @@ contract MinterNFT is ERC721, Ownable {
     }
 
     function mint() public payable {
-        require(isPublicMintEnabled, 'Minting not enabled');
+        require(isPublicMintEnabled, 'Mint is not enabled');
         uint256 passNftAmount = IERC721(passNftAddress).balanceOf(msg.sender);
         require(passNftAmount > 0, 'Pass NFT is not minted');
         uint256 newTokenId = totalSupply + 1;
