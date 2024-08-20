@@ -2,9 +2,9 @@
 
 This project is a digital platform that combines the power of artificial intelligence with blockchain technology to enable users to create unique digital art in the form of NFTs (Non-Fungible Tokens). The project empowers users to generate images using AI algorithms and securely mint them as NFTs on the blockchain. To access these features, users must first obtain a special Pass NFT, which grants them unlimited access to image generation and NFT minting tools.
 
-### Tech stack
+### Tech Stack:
 
-Solidity, Hardhat, JavaScript, Typescript, React.js, Next.js, Web3.js, Tailwind, Firebase, Mocha, Chai.
+`Solidity` `Hardhat` `JavaScript` `Typescript` `React.js` `Next.js` `Web3.js` `Tailwind` `Firebase` `Mocha` `Chai`
 
 ## Getting Started
 
@@ -15,7 +15,7 @@ Follow this section to get the project running on your development machine.
 Before getting started, make sure you have these tools installed:
 
 - [Git](https://git-scm.com/)
-- [Node.js v18](https://nodejs.org/en/)
+- [Node.js](https://nodejs.org/en/)
 
 ### 1. Installation
 
