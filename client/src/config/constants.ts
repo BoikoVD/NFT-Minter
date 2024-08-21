@@ -1,10 +1,10 @@
 const constants = {
   PASS_NFT_CONTRACT_ADDRESS:
-    process.env.MODE === "prod"
+    process.env.NEXT_PUBLIC_MODE === "prod"
       ? process.env.NEXT_PUBLIC_PROD_PASS_NFT_CONTRACT_ADDRESS
       : process.env.NEXT_PUBLIC_DEV_PASS_NFT_CONTRACT_ADDRESS,
   MINTER_NFT_CONTRACT_ADDRESS:
-    process.env.MODE === "prod"
+    process.env.NEXT_PUBLIC_MODE === "prod"
       ? process.env.NEXT_PUBLIC_PROD_MINTER_NFT_CONTRACT_ADDRESS
       : process.env.NEXT_PUBLIC_DEV_MINTER_NFT_CONTRACT_ADDRESS,
 
