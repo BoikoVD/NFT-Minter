@@ -37,11 +37,11 @@ export default function Footer() {
         <div className={`${styles.contactsContainer}`}>
           <div className={`${styles.contactItem}`}>
             <RiMapPinFill size={30} className="fill-pink" />
-            <Text className="ml-2">40.7128° N, 74.0060° W</Text>
+            <Text className="ml-2">Prague, Czech Republic</Text>
           </div>
           <div className={`${styles.contactItem}`}>
             <RiMailFill size={30} className="fill-pink" />
-            <Text className="ml-2">artbloc@ai.com</Text>
+            <Text className="ml-2">example@ai.com</Text>
           </div>
         </div>
       </div>
