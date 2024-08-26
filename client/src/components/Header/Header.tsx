@@ -15,7 +15,7 @@ const styles = {
   logo: "relative z-[100] flex w-[120px] flex-col items-center md:w-[150px]",
   nav: "fixed top-0 z-[99] flex h-screen max-h-screen w-screen flex-col items-center bg-purple py-10 transition-all duration-300 md:static md:mx-3 md:h-auto md:w-auto md:bg-transparent md:py-0",
   navList:
-    "my-10 mx-1 flex w-full flex-[1_1_auto] flex-col items-center justify-center gap-10 overflow-auto text-white md:my-0 md:flex-row",
+    "my-10 mx-1 flex w-full flex-[1_1_auto] flex-col items-center justify-center gap-10 md:gap-6 lg:gap-10 overflow-auto text-white md:my-0 md:flex-row",
   walletBtnWrapperMobile: "flex flex-col items-center gap-4 md:hidden",
   walletBtnWrapperDesktop: "hidden md:flex gap-6",
   burgerBtn: "relative z-[99] flex h-[24px] w-[34px] md:hidden",
@@ -47,13 +47,19 @@ export default function Header() {
         >
           <ul className={`${styles.navList}`}>
             <li>
-              <Link href={"/"}>Home</Link>
+              <Link href={"/"} onClick={() => setIsMenuOpen(false)}>
+                Home
+              </Link>
             </li>
             <li>
-              <Link href={"/mint"}>Mint</Link>
+              <Link href={"/mint"} onClick={() => setIsMenuOpen(false)}>
+                Pass NFT
+              </Link>
             </li>
             <li>
-              <Link href={"/create"}>Create</Link>
+              <Link href={"/create"} onClick={() => setIsMenuOpen(false)}>
+                Create
+              </Link>
             </li>
           </ul>
           <div className={`${styles.walletBtnWrapperMobile}`}>
