@@ -2,10 +2,6 @@
 
 This project is a digital platform that combines the power of artificial intelligence with blockchain technology to enable users to create unique digital art in the form of NFTs (Non-Fungible Tokens). The project empowers users to generate images using AI algorithms and securely mint them as NFTs on the blockchain. To access these features, users must first obtain a special Pass NFT, which grants them unlimited access to image generation and NFT minting tools.
 
-### Tech Stack:
-
-`Solidity` `Hardhat` `JavaScript` `Typescript` `React.js` `Next.js` `Web3.js` `Tailwind` `Firebase` `Mocha` `Chai`
-
 ## Getting Started
 
 Follow this section to get the project running on your development machine.
@@ -22,7 +18,7 @@ Before getting started, make sure you have these tools installed:
 Provided you have all prerequisites ready, you can install the application with the following command:
 
 ```sh
-npm i && cd client && npm i && cd ../
+npm i && cd client && npm i && cd ..
 ```
 
 ### 2. Environment variables
@@ -30,7 +26,7 @@ npm i && cd client && npm i && cd ../
 Setup environment variables:
 
 ```sh
-cp .env.example .env && cd client && cp .env.example .env && cd ../
+cp .env.example .env && cd client && cp .env.example .env && cd ..
 ```
 
 You don't need to setup the next 4 variables, these variables will setup automatically by executing the deploy script:
