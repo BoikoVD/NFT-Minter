@@ -28,13 +28,8 @@ export default function GenerateImageForm({
   setIsLoading,
   calssName
 }: IGenerateImageForm) {
-  const {
-    account,
-    isOwnerOfPassNFT,
-    isCorrectNetwork,
-    switchToCorrectNetwork
-  } = useWeb3Context();
-  const { openModal, closeModal } = useModal();
+  const { account } = useWeb3Context();
+  const { openModal } = useModal();
 
   const {
     register,
@@ -50,24 +45,6 @@ export default function GenerateImageForm({
         { message: "Please, enter your prompt" },
         { shouldFocus: true }
       );
-      return;
-    }
-    if (!isCorrectNetwork) {
-      openModal({
-        content: <Text>Please, switch network to Sepolia Testnet</Text>,
-        modalName: "switchNetworkModal",
-        type: "default",
-        actionText: "Switch",
-        actionHandler: () => switchToCorrectNetwork(closeModal)
-      });
-      return;
-    }
-    if (!isOwnerOfPassNFT) {
-      openModal({
-        content: <Text>You must mint the Pass NFT at first!</Text>,
-        modalName: "owningWarnModal",
-        type: "default"
-      });
       return;
     }
 

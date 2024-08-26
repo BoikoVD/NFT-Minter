@@ -23,6 +23,7 @@ export default function MintNftButton({
     account,
     minterNFTContract,
     isCorrectNetwork,
+    isOwnerOfPassNFT,
     switchToCorrectNetwork
   } = useWeb3Context();
   const { openModal, closeModal } = useModal();
@@ -63,6 +64,14 @@ export default function MintNftButton({
         type: "default",
         actionText: "Switch",
         actionHandler: () => switchToCorrectNetwork(closeModal)
+      });
+      return;
+    }
+    if (!isOwnerOfPassNFT) {
+      openModal({
+        content: <Text>You must mint the Pass NFT at first!</Text>,
+        modalName: "owningWarnModal",
+        type: "default"
       });
       return;
     }
